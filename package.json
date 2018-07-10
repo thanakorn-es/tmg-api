@@ -3,7 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "start-client-cobrand-inquiry": "node ./bin/www client/cobrand/inquiry 8080",
+    "start-client-cobrand-command": "node ./bin/www client/cobrand/command 8081",
+    "start-api-mcard-cmd": "node ./bin/www api/mcard/command 8089",
+    "start-api-mcard-cmd": "node ./bin/www api/mcard/query 8090"
   },
   "dependencies": {
     "body-parser": "~1.18.2",
