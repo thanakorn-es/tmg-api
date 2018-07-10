@@ -27,22 +27,25 @@ router.get('/:MBCODE', function(req,res){
   //stmt += " where PM200MP.MBID = '" + req.body.cust_id + "' OFFSET  " + req.body.selrangedt.start + " ROWS FETCH FIRST " + req.body.selrangedt.limit + " ROWS";
   stmt += " where PM200MP.MBCODE = '" + req.body.MBCODE + "') as tbl";
   pool.query(stmt)
-  .then(function(result) {
+    .then(function(result) {
       console.log(result.length);
       console.log(result);
 
-      if (result.length <= 0) {
+      if (result.length <= 0) { }
 
+      if( req.params.MBCODE === "7109000900003026" ){
+        res.status(200);
+        res.json({});
+        
+      }
+      else{
+        res.status(404);
+        res.end();
+      }
+    })
+    .catch(function(err){
 
-  if( req.params.MBCODE === "7109000900003026" ){
-    res.status(200);
-    res.json({});
-    
-  }
-  else{
-    res.status(404);
-    res.end();
-  }
+    });
 });
 
 module.exports = router;

@@ -20,11 +20,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+var inquiry_by_id = require('./route/inquiry_by_id');
+var inquiry_by_partner = require('./route/inquiry_by_partner');
+app.use('/cobrand/inquiry_by_id', inquiry_by_id);
+app.use('/cobrand/inquiry_by_partner', inquiry_by_partner);
 
-app.get('/', function(req,res){
-  res.send('hi');
-});  
 
+/*
 app.post('/byid', function(req,res){
   console.log('/byid');
   var options = {
@@ -48,6 +50,7 @@ app.post('/byid', function(req,res){
         res.end();
     });
 });
+*/
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

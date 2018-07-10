@@ -39,12 +39,12 @@ router.post('/', function(req, res){
         .then(function(result){
           console.log('Partner Found');
           res.status(200);
-          res.json(sth with partner augmentation);
+          res.json({});
         })
         .catch(function(err){
           console.log('No Partner');
           res.status(200);
-          res.json(sth without partner augmentation);
+          res.json({});
         });
     })
     .catch(function(err){

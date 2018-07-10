@@ -14,14 +14,29 @@ const schema = Joi.object().keys({
 }).with('username', 'birthyear').without('password', 'access_token');
 
 const _template = {
-  "cobrand_inquiry": Joi.object().keys({
-    partner_nbr: Joi.number().integer().min(10000).max(50000),
+  "cobrand_inquiry_by_pnnbr": Joi.object().keys({
+    partner_id: Joi.string().length(5).required(),
+    partner_nbr: Joi.string().required(),
   }),
-  /*"cobrand_redeem": Joi.object().keys(),
-  "cobrand_register": Joi.object().keys(),
+  "cobrand_inquiry_by_id": Joi.object().keys({
+    partner_id: Joi.string().length(5).required(),
+    partner_nbr: Joi.string().required(),
+  }),
+  "cobrand_inquiry_by_passport": Joi.object().keys({
+    partner_id: Joi.string().length(5).required(),
+    partner_nbr: Joi.string().required(),
+  }),
+  "cobrand_redeem": Joi.object().keys({
+    partner_id: Joi.string().length(5).required(),
+    partner_nbr: Joi.string().required(),
+  }),
+  /*"cobrand_register": Joi.object().keys(),
   "cobrand_earn": Joi.object().keys(),*/
   "mapp_inquiry": Joi.object().keys({
-    mbcode: Joi.string().required(),
+    mbcode: Joi.string().length(16).required(),
+  }),
+  "icfs_inquiry": Joi.object().keys({
+    mbcode: Joi.string().length(16).required(),
   }),
 }
 
