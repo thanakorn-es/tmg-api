@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const config = require('../../../config');
+const config = require('../../../../config');
 var rp = require('request-promise');
-const config = {
+const config_400 = {
   host: '10.1.1.5',
   user: 'MCAPI01',
   password: 'W4@B1O#1'
@@ -10,7 +10,7 @@ const config = {
       //user: 'qsecofr',
       //password: 'qsecofr'
 }
-const pool = require('node-jt400').pool(config);
+const pool = require('node-jt400').pool(config_400);
 
 //  POST /api/mcard/:MBCODE
 router.get('/:MBCODE', function(req,res){
