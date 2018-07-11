@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router();
 var rp = require('request-promise');
+var config = require('../../../../config/')
 
 // /mapp/inquiry/
 router.post('/', function(req, res){
  
   //req.params.MBCODE ex. /validation/partner/10200
   //req.query.MBCODE  ex. /validation/partner?MBCODE=10200
-  const validator_partner_url = 'http://localhost:8081/validation/partner/';
-  const validator_schema_url = 'http://localhost:8081/validation/schema/';
+  const validator_partner_url = ''+ config.endpoint.api_validator.protocol +'://'+ config.endpoint.api_validator.url +':'+ config.endpoint.api_validator.port +'/validation/partner/';
+  const validator_schema_url = ''+ config.endpoint.api_validator.protocol +'://'+ config.endpoint.api_validator.url +':'+ config.endpoint.api_validator.port +'/validation/schema/';
 
   var options = {
     method: 'POST',
@@ -21,7 +22,7 @@ router.post('/', function(req, res){
     .then(function(result){
       console.log(result);
       console.log('get MCard');
-      rp.get('http://localhost:8089/api/mcard/' + req.body.mbcode)
+      rp.get(''+ config.endpoint.mapp_inquiry.protocol +'://'+ config.endpoint.mapp_inquiry.url +':'+ config.endpoint.mapp_inquiry.port +'/api/mcard/' + req.body.mbcode)
         .then(function(mcard){
           console.log("mcard found", mcard);
           return mcard;
@@ -49,7 +50,7 @@ router.post('/', function(req, res){
     })
     .catch(function(err){
       console.log('failure');
-      res.status(500);
+      res.status(400);
       res.end();
     });
 });
