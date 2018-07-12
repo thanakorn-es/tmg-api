@@ -21,9 +21,20 @@ app.use(cookieParser());
 //app.use(express.static(path.join(__dirname, 'public')));
 
 
-var inquiry = require('./route/inquiry');
-app.use('/mapp/inquiry', inquiry);
+/*
+*
+* Maintain up to 3 versions 
+* 
+*/
+var inquiry_1 = require('./route/inquiry.0.1');
+var inquiry_2 = require('./route/inquiry.0.2');
+var inquiry_3 = require('./route/inquiry.0.3');
+var inquiry = inquiry_3;
 
+app.use('/mapp/inquiry', inquiry);
+app.use('/mapp/0.1/inquiry', inquiry_1);
+app.use('/mapp/0.2/inquiry', inquiry_2);
+app.use('/mapp/0.3/inquiry', inquiry_3);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
