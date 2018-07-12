@@ -20,9 +20,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 var v_partner = require('./route/v_partner');
 var v_inquiry = require('./route/v_mcard');
 var v_schema = require('./route/v_schema')
-app.use('/validator/partner', v_partner);
-app.use('/validator/schema', v_schema);
-app.use('/validator/inquiry', v_inquiry);
+app.use('/validation/partner', v_partner);
+app.use('/validation/schema', v_schema);
+app.use('/validation/inquiry', v_inquiry);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const config = require('../../../../config');
+const config = require('../../../config');
 var rp = require('request-promise');
 const config_400 = {
   host: config.db.host,
@@ -11,14 +11,14 @@ const config_400 = {
       //password: 'qsecofr'
 };
 const pool = require('node-jt400').pool(config_400);
-//  POST /api/mcard/:MBCODE
+
+//  POST /api/partner_mcard/:MBCODE
 router.get('/:MBCODE', function(req,res){
   // get mcard 
-  console.log(req.params.MBCODE);
   	var stmt = "select *";
-        stmt += " from MBRFLIB/MVM01P MVM01P";
-		stmt += " inner join MBRFLIB/MCRS2P MCRS2P on MVM01P.MBCODE = MCRS2P.MBCODE";
-        stmt += " where MVM01P.MBCODE = '" + req.params.MBCODE + "'";
+        stmt += " from MBRFLIB/PM200MP PM200MP";
+        stmt += " inner join MBRFLIB/PM110MP PM110MP on PM200MP.PNID = PM110MP.PNID and PM200MP.PNNUM = PM110MP.PNNUM";
+        stmt += " where PM200MP.MBCODE = '" + req.params.MBCODE + "'";
   pool.query(stmt)
     .then(function(result) {
       console.log(result.length);
@@ -35,9 +35,7 @@ router.get('/:MBCODE', function(req,res){
       }
     })
     .catch(function(err){
-		res.status(500);
-		console.log(err);
-		res.end();
+
     });
 });
 

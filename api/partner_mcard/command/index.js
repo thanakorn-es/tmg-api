@@ -17,10 +17,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-var partner_mbcode = require('./route/l_partner_m');
-
-app.use('/api/lookup/partner/mbcode', partner_mbcode);
-
+var redeem_dp = require('./route/redeem_dp');
+var redeem_sp = require('./route/redeem_sp');
+var redeem_pr = require('./route/redeem_pr');
+var redeem_cc = require('./route/redeem_cc');
+var redeem_mi = require('./route/redeem_mi');
+app.use('/api/redeem/dp', redeem_dp);
+app.use('/api/redeem/sp', redeem_sp);
+app.use('/api/redeem/pr', redeem_pr);
+app.use('/api/redeem/cc', redeem_cc);
+app.use('/api/redeem/mi', redeem_mi);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

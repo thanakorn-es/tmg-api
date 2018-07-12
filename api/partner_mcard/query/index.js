@@ -17,9 +17,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-var partner_mbcode = require('./route/l_partner_m');
+var api_mcard_inquiry = require('./route/index');
 
-app.use('/api/lookup/partner/mbcode', partner_mbcode);
+app.use('/api/lookup/partner/mbcode', api_mcard_inquiry);
 
 
 // catch 404 and forward to error handler

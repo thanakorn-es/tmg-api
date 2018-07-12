@@ -5,38 +5,31 @@ const Joi = require('joi');
 //console.log(config.app.hah);
 //console.log(config.db.user);
 
-const schema = Joi.object().keys({
-  username: Joi.string().alphanum().min(3).max(30).required(),
-  password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/),
-  access_token: [Joi.string(), Joi.number()],
-  birthyear: Joi.number().integer().min(1900).max(2013),
-  email: Joi.string().email()
-}).with('username', 'birthyear').without('password', 'access_token');
 
 const _template = {
   "cobrand_inquiry_by_pnnbr": Joi.object().keys({
-    partner_id: Joi.string().length(5).required(),
-    partner_nbr: Joi.string().required(),
+    PARTNER_ID: Joi.string().length(5).required(),
+    PARTNER_NBR: Joi.string().required(),
   }),
   "cobrand_inquiry_by_id": Joi.object().keys({
-    partner_id: Joi.string().length(5).required(),
-    partner_nbr: Joi.string().required(),
+    PARTNER_ID: Joi.string().length(5).required(),
+    PARTNER_NBR: Joi.string().required(),
   }),
-  "cobrand_inquiry_by_passport": Joi.object().keys({
-    partner_id: Joi.string().length(5).required(),
-    partner_nbr: Joi.string().required(),
+  "cobrand_inquiry_by_partner": Joi.object().keys({
+    PARTNER_ID: Joi.string().length(5).required(),
+    PARTNER_NBR: Joi.string().required(),
   }),
   "cobrand_redeem": Joi.object().keys({
-    partner_id: Joi.string().length(5).required(),
-    partner_nbr: Joi.string().required(),
+    PARTNER_ID: Joi.string().length(5).required(),
+    PARTNER_NBR: Joi.string().required(),
   }),
   /*"cobrand_register": Joi.object().keys(),
   "cobrand_earn": Joi.object().keys(),*/
   "mapp_inquiry": Joi.object().keys({
-    mbcode: Joi.string().length(16).required(),
+    MBCODE: Joi.string().length(16).required(),
   }),
   "icfs_inquiry": Joi.object().keys({
-    mbcode: Joi.string().length(16).required(),
+    MBCODE: Joi.string().length(16).required(),
   }),
 }
 
@@ -57,6 +50,7 @@ router.post('/:SCHEMANO', function(req,res){
       res.end();
     }
     else{
+	  console.log(result);
       console.log("reason", result.value);
       res.status(404);
       res.json({"reason": result.value});
