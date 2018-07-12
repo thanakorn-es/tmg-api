@@ -14,11 +14,11 @@ const pool = require('node-jt400').pool(config);
 
 //  POST /api/partner/:PARTNER_NBR
 router.get('/:PARTNER_NBR', function(req,res){
-  // get mcard 
+  // get partner 
   	var stmt = "select *";
-        stmt += " from MBRFLIB/PM200MP PM200MP";
-        stmt += " inner join MBRFLIB/PM110MP PM110MP on PM200MP.PNID = PM110MP.PNID and PM200MP.PNNUM = PM110MP.PNNUM";
-        stmt += " where PM200MP.MBCODE = '" + req.params.MBCODE + "'";
+        stmt += " FROM MBRFLIB/PM200MP PM200MP";
+        stmt += " inner join MBRFLIB/MVM01P MVM01P on PM200MP.MBCODE = MVM01P.MBCODE";
+        stmt += " where PM200MP.PNNUM = '" + req.params.PARTNER_NBR + "'";
   pool.query(stmt)
     .then(function(result) {
       console.log(result.length);

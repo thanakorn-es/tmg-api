@@ -1,6 +1,6 @@
-const config = {
-  url: 'x.x.x.x',
-  user: 'aaa',
-  pass: 'bbb'
+const config_400 = {
+  host: '10.1.100.3',
+  user: 'MCAPI01',
+  password: 'M4@PIONE'
 };
-module.exports = config;
+module.exports = config_400;

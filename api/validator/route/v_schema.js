@@ -8,20 +8,20 @@ const Joi = require('joi');
 
 const _template = {
   "cobrand_inquiry_by_pnnbr": Joi.object().keys({
-    partner_id: Joi.string().length(5).required(),
-    partner_nbr: Joi.string().required(),
+    PARTNER_ID: Joi.string().length(5).required(),
+    PARTNER_NBR: Joi.string().required(),
   }),
   "cobrand_inquiry_by_id": Joi.object().keys({
-    partner_id: Joi.string().length(5).required(),
-    partner_nbr: Joi.string().required(),
+    PARTNER_ID: Joi.string().length(5).required(),
+    PARTNER_NBR: Joi.string().required(),
   }),
-  "cobrand_inquiry_by_passport": Joi.object().keys({
-    partner_id: Joi.string().length(5).required(),
-    partner_nbr: Joi.string().required(),
+  "cobrand_inquiry_by_partner": Joi.object().keys({
+    PARTNER_ID: Joi.string().length(5).required(),
+    PARTNER_NBR: Joi.string().required(),
   }),
   "cobrand_redeem": Joi.object().keys({
-    partner_id: Joi.string().length(5).required(),
-    partner_nbr: Joi.string().required(),
+    PARTNER_ID: Joi.string().length(5).required(),
+    PARTNER_NBR: Joi.string().required(),
   }),
   /*"cobrand_register": Joi.object().keys(),
   "cobrand_earn": Joi.object().keys(),*/
