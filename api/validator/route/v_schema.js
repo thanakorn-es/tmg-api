@@ -13,7 +13,9 @@ const _template = {
   }),
   "cobrand_inquiry_by_id": Joi.object().keys({
     PARTNER_ID: Joi.string().length(5).required(),
-    PARTNER_NBR: Joi.string().required(),
+    CUST_ID: Joi.required(),
+	CUST_COUNTRYCODE: Joi.required(),
+	SELRANGEDT: Joi.required(),
   }),
   "cobrand_inquiry_by_partner": Joi.object().keys({
     PARTNER_ID: Joi.string().length(5).required(),
@@ -30,6 +32,9 @@ const _template = {
   }),
   "icfs_inquiry": Joi.object().keys({
     MBCODE: Joi.string().length(16).required(),
+  }),
+  "cobrand_validate_id": Joi.object().keys({
+    CUST_ID: Joi.required(),
   }),
 }
 

@@ -11,14 +11,18 @@ const config_400 = {
       //password: 'qsecofr'
 };
 const pool = require('node-jt400').pool(config_400);
-//  POST /api/mcard/:MBCODE
-router.get('/:MBCODE', function(req,res){
+
+//  POST /api/inquiry_partner
+router.get('/:PARTNER_NBR/:PARTNER_ID', function(req,res){
   // get mcard 
-  console.log(req.params.MBCODE);
-  	var stmt = "select *";
-        stmt += " from MBRFLIB/MVM01P MVM01P";
-		stmt += " inner join MBRFLIB/MCRS2P MCRS2P on MVM01P.MBCODE = MCRS2P.MBCODE";
-        stmt += " where MVM01P.MBCODE = '" + req.params.MBCODE + "'";
+  	var stmt = "select MVM01P.MBCODE,MVM01P.MBMEMC,MVM01P.MBEXP,";
+            stmt += " MCRS2P.MBPOINT,MCRS2P.MBCEXP,MCRS2P.MBDATT,";
+            stmt += " MVM01P.MBTTLE,MVM01P.MBTNAM,MVM01P.MBTSUR,";
+            stmt += " MVM01P.MBETLE,MVM01P.MBENAM,MVM01P.MBESUR ";
+            stmt += " from MBRFLIB/MVM01P MVM01P";
+            stmt += " inner join MBRFLIB/PM200MP PM200MP on MVM01P.MBCODE = PM200MP.MBCODE";
+            stmt += " inner join MBRFLIB/MCRS2P MCRS2P on MVM01P.MBCODE = MCRS2P.MBCODE";
+            stmt += " where PM200MP.PNID = '" + req.params.PARTNER_ID + "' and PM200MP.PNNUM = '" + req.params.PARTNER_NBR + "'";
   pool.query(stmt)
     .then(function(result) {
       console.log(result.length);
@@ -35,9 +39,7 @@ router.get('/:MBCODE', function(req,res){
       }
     })
     .catch(function(err){
-		res.status(500);
-		console.log(err);
-		res.end();
+
     });
 });
 
