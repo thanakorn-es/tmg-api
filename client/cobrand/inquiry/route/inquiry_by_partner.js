@@ -31,6 +31,7 @@ router.post('/', function(req, res){
           console.log("Partner found", partner);
 		  rp.get(''+ config.endpoint.api_partner_inquiry.protocol +'://'+ config.endpoint.api_partner_inquiry.url +':'+ config.endpoint.api_partner_inquiry.port +'/api/inquiry_partner/' + req.body.PARTNER_NBR + '/' + req.body.PARTNER_ID)
 		  .then(function(partner_result){
+			  console.log("MCard found", partner_result);
 			  if (partner_result.length == 1) {
                   //101 - success
                   res.json({

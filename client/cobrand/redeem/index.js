@@ -21,17 +21,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 var redeem = require('./route/redeem');
-var redeem_dp = require('./route/redeem_dp');
-var redeem_sp = require('./route/redeem_sp');
-var redeem_sr = require('./route/redeem_sr');
-var redeem_cc = require('./route/redeem_cc');
-var redeem_mi = require('./route/redeem_mi');
+
 app.use('/cobrand/redeem', redeem);
-app.use('/cobrand/redeem_dp', redeem_dp);
-app.use('/cobrand/redeem_sp', redeem_sp);
-app.use('/cobrand/redeem_sr', redeem_sr);
-app.use('/cobrand/redeem_cc', redeem_cc);
-app.use('/cobrand/redeem_mi', redeem_mi);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

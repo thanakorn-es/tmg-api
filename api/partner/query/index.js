@@ -17,10 +17,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+var redeem_partner = require('./route/redeem_partner');
 var inquiry_partner = require('./route/inquiry_partner');
 var inquiry_id = require('./route/inquiry_id');
 var validate_id = require('./route/validate_id');
 
+app.use('/api/redeem_partner', redeem_partner);
 app.use('/api/inquiry_partner', inquiry_partner);
 app.use('/api/inquiry_id', inquiry_id);
 app.use('/api/validate_id', validate_id);

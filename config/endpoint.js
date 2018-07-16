@@ -31,7 +31,7 @@ const config = {
 	},
 	api_mcard_command:
 	{
-		url: '10.90.230.96',
+		url: '172.17.0.9',
 		protocol: 'http',
 		port: '8083'
 	},
@@ -47,18 +47,19 @@ const config = {
 		protocol: 'http',
 		port: '8084'
 	},
-	client_cobrand_command:
+	client_cobrand_redeem:
 	{
-		url: '10.90.230.96',
+		url: '172.17.0.10',
 		protocol: 'http',
 		port: '8085'
 	},
-	client_cobrand_redeem:
+	client_cobrand_command:
 	{
 		url: '10.90.230.96',
 		protocol: 'http',
 		port: '8086'
 	}
+	
 	
 };
 module.exports = config;
