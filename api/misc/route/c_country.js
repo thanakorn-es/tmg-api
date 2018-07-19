@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const config = require('../../../../config');
+const config = require('../../../config');
 var rp = require('request-promise');
 const config_400 = {
   host: config.db.host,
@@ -11,14 +11,11 @@ const config_400 = {
       //password: 'qsecofr'
 };
 const pool = require('node-jt400').pool(config_400);
-//  POST /api/mcard/:MBCODE
-router.get('/:MBCODE', function(req,res){
+
+//  POST /api/inquiry_partner
+router.get('/:CUST_COUNTRYCODE', function(req,res){
   // get mcard 
-  console.log(req.params.MBCODE);
-  	var stmt = "select *";
-        stmt += " from MBRFLIB/MVM01P MVM01P";
-		stmt += " inner join MBRFLIB/MCRS2P MCRS2P on MVM01P.MBCODE = MCRS2P.MBCODE";
-        stmt += " where MVM01P.MBCODE = '" + req.params.MBCODE + "'";
+  	var stmt = "select CM100MP.CNTRYCD3 from MBRFLIB/CM100MP CM100MP where CM100MP.CNTRYCD2 = '" + req.params.CUST_COUNTRYCODE + "'";
   pool.query(stmt)
     .then(function(result) {
       console.log(result.length);
@@ -35,9 +32,7 @@ router.get('/:MBCODE', function(req,res){
       }
     })
     .catch(function(err){
-		res.status(500);
 		console.log(err);
-		res.end();
     });
 });
 

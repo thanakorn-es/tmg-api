@@ -21,34 +21,23 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 var redeem = require('./route/redeem');
-var redeem_dp = require('./route/redeem_dp');
-var redeem_sp = require('./route/redeem_sp');
-var redeem_sr = require('./route/redeem_sr');
-var redeem_cc = require('./route/redeem_cc');
-var redeem_mi = require('./route/redeem_mi');
+
 app.use('/cobrand/redeem', redeem);
-app.use('/cobrand/redeem_dp', redeem_dp);
-app.use('/cobrand/redeem_sp', redeem_sp);
-app.use('/cobrand/redeem_sr', redeem_sr);
-app.use('/cobrand/redeem_cc', redeem_cc);
-app.use('/cobrand/redeem_mi', redeem_mi);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+  res.status(404);
+  res.end();
+  next();
 });
 
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
   // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  res.status(500);
+  res.end();
 });
 
 module.exports = app;

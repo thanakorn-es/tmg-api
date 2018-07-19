@@ -18,26 +18,27 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 var partner_mbcode = require('./route/l_partner_m');
+var partner_nbr = require('./route/l_partner_n');
+var c_country = require('./route/c_country');
 
 app.use('/api/lookup/partner/mbcode', partner_mbcode);
+app.use('/api/lookup/partner/nbr', partner_nbr);
+app.use('/api/lookup/country', c_country);
 
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+  res.status(404);
+  res.end();
+  next();
 });
 
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
   // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  res.status(500);
+  res.end();
 });
 
 module.exports = app;

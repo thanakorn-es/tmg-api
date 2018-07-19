@@ -4,12 +4,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var rp = require('request-promise');
-
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
@@ -22,9 +19,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 var inquiry_by_id = require('./route/inquiry_by_id');
 var inquiry_by_partner = require('./route/inquiry_by_partner');
+var validate_id = require('./route/validate_id');
 app.use('/cobrand/inquiry_by_id', inquiry_by_id);
-app.use('/cobrand/inquiry_by_partner', inquiry_by_partner);
-
+app.use('/cobrand/inquiry_mpoint', inquiry_by_partner);
+app.use('/cobrand/validateID', validate_id);
 
 /*
 app.post('/byid', function(req,res){
@@ -54,20 +52,17 @@ app.post('/byid', function(req,res){
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+  res.status(404);
+  res.end();
+  next();
 });
 
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
   // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  res.status(500);
+  res.end();
 });
 
 module.exports = app;

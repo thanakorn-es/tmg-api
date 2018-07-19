@@ -21,7 +21,7 @@ router.post('/', function(req, res){
   var mcard_tmp={};
   var date_str = '';
   var today = new Date();
-  date_str = today.getUTCFullYear().toString() + ((today.getUTCMonth() + 1) < 10 ? '0' : '').toString() + (today.getUTCMonth() + 1).toString() + (today.getUTCDate() < 10 ? '0' : '').toString() + today.getUTCDate();
+  date_str = today.getFullYear().toString() + ((today.getMonth() + 1) < 10 ? '0' : '').toString() + (today.getMonth() + 1).toString() + (today.getDate() < 10 ? '0' : '').toString() + today.getDate();
  
   rp(options)
     .then(function(result){

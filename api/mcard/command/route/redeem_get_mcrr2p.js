@@ -12,13 +12,9 @@ const config_400 = {
 };
 const pool = require('node-jt400').pool(config_400);
 //  POST /api/mcard/:MBCODE
-router.get('/:MBCODE', function(req,res){
+router.get('/:DATE/:MBCODE', function(req,res){
   // get mcard 
-  console.log(req.params.MBCODE);
-  	var stmt = "select *";
-        stmt += " from MBRFLIB/MVM01P MVM01P";
-		stmt += " inner join MBRFLIB/MCRS2P MCRS2P on MVM01P.MBCODE = MCRS2P.MBCODE";
-        stmt += " where MVM01P.MBCODE = '" + req.params.MBCODE + "'";
+  var stmt = "select * from MBRFLIB/MCRR2P where MBDAT='"+ req.params.DATE +"' and MBCODE='"+ req.params.MBCODE +"'";
   pool.query(stmt)
     .then(function(result) {
       console.log(result.length);

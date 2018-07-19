@@ -31,34 +31,35 @@ const config = {
 	},
 	api_mcard_command:
 	{
-		url: '10.90.230.96',
+		url: '172.17.0.9',
 		protocol: 'http',
 		port: '8083'
 	},
 	api_partner_inquiry:
 	{
-		url: '172.17.0.3',
+		url: '172.17.0.7',
 		protocol: 'http',
 		port: '8087'
 	},
 	client_cobrand_inquiry:
 	{
-		url: '10.90.230.96',
+		url: '172.17.0.8',
 		protocol: 'http',
 		port: '8084'
+	},
+	client_cobrand_redeem:
+	{
+		url: '172.17.0.10',
+		protocol: 'http',
+		port: '8085'
 	},
 	client_cobrand_command:
 	{
 		url: '10.90.230.96',
 		protocol: 'http',
-		port: '8085'
-	},
-	client_cobrand_redeem:
-	{
-		url: '10.90.230.96',
-		protocol: 'http',
 		port: '8086'
 	}
+	
 	
 };
 module.exports = config;

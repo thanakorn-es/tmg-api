@@ -17,33 +17,33 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-var redeem_dp = require('./route/redeem_dp');
-var redeem_sp = require('./route/redeem_sp');
-var redeem_pr = require('./route/redeem_pr');
-var redeem_cc = require('./route/redeem_cc');
-var redeem_mi = require('./route/redeem_mi');
-app.use('/api/redeem/dp', redeem_dp);
-app.use('/api/redeem/sp', redeem_sp);
-app.use('/api/redeem/pr', redeem_pr);
-app.use('/api/redeem/cc', redeem_cc);
-app.use('/api/redeem/mi', redeem_mi);
+var redeem_update_point = require('./route/redeem_update_point');
+var redeem_get_mcrr2p = require('./route/redeem_get_mcrr2p');
+var redeem_insert_mcrr2p = require('./route/redeem_insert_mcrr2p');
+var redeem_get_receipt = require('./route/redeem_get_receipt');
+var redeem_update_receipt = require('./route/redeem_update_receipt');
+var redeem_insert_receipt = require('./route/redeem_insert_receipt');
+var redeem_insert_transaction = require('./route/redeem_insert_transaction');
+app.use('/api/redeem/get_mcrr2p', redeem_get_mcrr2p);
+app.use('/api/redeem/insert_mcrr2p', redeem_insert_mcrr2p);
+app.use('/api/redeem/update_point', redeem_update_point);
+app.use('/api/redeem/get_receipt', redeem_get_receipt);
+app.use('/api/redeem/update_receipt', redeem_update_receipt);
+app.use('/api/redeem/insert_receipt', redeem_insert_receipt);
+app.use('/api/redeem/insert_transaction', redeem_insert_transaction);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+  res.status(404);
+  res.end();
+  next();
 });
 
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
   // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  res.status(500);
+  res.end();
 });
-
 module.exports = app;

@@ -12,15 +12,20 @@ const config_400 = {
 };
 const pool = require('node-jt400').pool(config_400);
 //  POST /api/mcard/:MBCODE
-router.get('/:MBCODE', function(req,res){
+router.get('/:DATE/:MTYPE/:MRCP', function(req,res){
   // get mcard 
-  console.log(req.params.MBCODE);
-  	var stmt = "select *";
-        stmt += " from MBRFLIB/MVM01P MVM01P";
-		stmt += " inner join MBRFLIB/MCRS2P MCRS2P on MVM01P.MBCODE = MCRS2P.MBCODE";
-        stmt += " where MVM01P.MBCODE = '" + req.params.MBCODE + "'";
-  pool.query(stmt)
-    .then(function(result) {
+  var point_log_stmt_3p = "insert into MBRFLIB/MCRTA3P";
+	  point_log_stmt_3p += "(MBMYM,MBBRH,MBTYR,MBRECN)";
+	  point_log_stmt_3p += " values(?,?,?,?)";
+	  var point_log_params_3p = [
+	  	parseInt(req.params.DATE),
+	  	88,
+	  	req.params.MTYPE,
+	  	req.params.MRCP
+	  ];
+	  
+	  pool.insertAndGetId(point_log_stmt_3p, point_log_params_3p)
+      .then(function(result) {
       console.log(result.length);
       console.log(result);
 

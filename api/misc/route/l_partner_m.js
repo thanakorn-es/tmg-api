@@ -12,7 +12,7 @@ const config_400 = {
 };
 const pool = require('node-jt400').pool(config_400);
 
-//  POST /api/partner_mcard/:MBCODE
+//  POST /api/lookup/partner/mbcode
 router.get('/:MBCODE', function(req,res){
   // get mcard 
   	var stmt = "select *";
@@ -26,7 +26,7 @@ router.get('/:MBCODE', function(req,res){
 
       if(result.length > 0){
         res.status(200);
-        res.json({});
+        res.json(result);
         
       }
       else{
