@@ -34,6 +34,22 @@ router.post('/', function(req, res){
 			  console.log("MCard found", partner_result);
 			  if (partner_result.length == 1) {
                   //101 - success
+				var MBEXP_ = 0;
+				var MBPOINT_ = 0;
+				var MBCEXP_ = 0;
+				var MBDATT_ = 0;
+				if(partner_result[0].MBEXP){
+					MBEXP_ = partner_result[0].MBEXP;
+				}
+				if(partner_result[0].MBPOINT){
+					MBPOINT_ = partner_result[0].MBPOINT;
+				}
+				if(partner_result[0].MBCEXP){
+					MBCEXP_ = partner_result[0].MBCEXP;
+				}
+				if(partner_result[0].MBDATT){
+					MBDATT_ = partner_result[0].MBDATT;
+				}
                   res.json({
                       "RESP_SYSCDE": "",
                       "RESP_DATETIME": "",
@@ -41,10 +57,10 @@ router.post('/', function(req, res){
 					  "RESP_MSG": "Success",
                       "MCARD_NUM": partner_result[0].MBCODE,
                       "CARD_TYPE": partner_result[0].MBMEMC,
-                      "CARD_EXPIRY_DATE": partner_result[0].MBEXP,
-                      "CARD_POINT_BALANCE": partner_result[0].MBPOINT,
-                      "CARD_POINT_EXPIRY": partner_result[0].MBCEXP,
-                      "CARD_POINT_EXP_DATE": partner_result[0].MBDATT,
+                      "CARD_EXPIRY_DATE": MBEXP_,
+                      "CARD_POINT_BALANCE": MBPOINT_,
+                      "CARD_POINT_EXPIRY": MBCEXP_,
+                      "CARD_POINT_EXP_DATE": MBDATT_,
                       "DEMO_TH_TITLE": partner_result[0].MBTTLE,
                       "DEMO_TH_NAME": partner_result[0].MBTNAM,
                       "DEMO_TH_SURNAME": partner_result[0].MBTSUR,
@@ -55,6 +71,22 @@ router.post('/', function(req, res){
 				return;
               } else if (partner_result.length > 1) {
                   //102 - more than 1 card
+				  var MBEXP_ = 0;
+				var MBPOINT_ = 0;
+				var MBCEXP_ = 0;
+				var MBDATT_ = 0;
+				if(partner_result[0].MBEXP){
+					MBEXP_ = partner_result[0].MBEXP;
+				}
+				if(partner_result[0].MBPOINT){
+					MBPOINT_ = partner_result[0].MBPOINT;
+				}
+				if(partner_result[0].MBCEXP){
+					MBCEXP_ = partner_result[0].MBCEXP;
+				}
+				if(partner_result[0].MBDATT){
+					MBDATT_ = partner_result[0].MBDATT;
+				}
                   res.json({
                       "RESP_SYSCDE": "",
                       "RESP_DATETIME": "",
@@ -62,10 +94,10 @@ router.post('/', function(req, res){
 					  "RESP_MSG": "Success, found many Mcard",
                       "MCARD_NUM": partner_result[0].MBCODE,
                       "CARD_TYPE": partner_result[0].MBMEMC,
-                      "CARD_EXPIRY_DATE": partner_result[0].MBEXP,
-                      "CARD_POINT_BALANCE": partner_result[0].MBPOINT,
-                      "CARD_POINT_EXPIRY": partner_result[0].MBCEXP,
-                      "CARD_POINT_EXP_DATE": partner_result[0].MBDATT,
+                      "CARD_EXPIRY_DATE": MBEXP_,
+                      "CARD_POINT_BALANCE": MBPOINT_,
+                      "CARD_POINT_EXPIRY": MBCEXP_,
+                      "CARD_POINT_EXP_DATE": MBDATT_,
                       "DEMO_TH_TITLE": partner_result[0].MBTTLE,
                       "DEMO_TH_NAME": partner_result[0].MBTNAM,
                       "DEMO_TH_SURNAME": partner_result[0].MBTSUR,
