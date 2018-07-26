@@ -8,7 +8,7 @@ router.post('/', function(req, res){
  
   //req.params.MBCODE ex. /validation/partner/10200
   //req.query.MBCODE  ex. /validation/partner?MBCODE=10200
-  const validator_partner_url = ''+ config.endpoint.api_validator.protocol +'://'+ config.endpoint.api_validator.url +':'+ config.endpoint.api_validator.port +'/validation/partner/10200';
+  const validator_partner_url = ''+ config.endpoint.api_validator.protocol +'://'+ config.endpoint.api_validator.url +':'+ config.endpoint.api_validator.port +'/validation/partnerid/'+req.body.PARTNER_ID;
   const validator_schema_url = ''+ config.endpoint.api_validator.protocol +'://'+ config.endpoint.api_validator.url +':'+ config.endpoint.api_validator.port +'/validation/schema/';
 
   var options = {
@@ -26,9 +26,10 @@ router.post('/', function(req, res){
     .then(function(result){
       console.log(result);
       console.log('get MCard');
-      rp.get(''+ config.endpoint.api_mcard_inquiry.protocol +'://'+ config.endpoint.api_mcard_inquiry.url +':'+ config.endpoint.api_mcard_inquiry.port +'/api/mcard/' + req.body.mbcode)
+      rp.get(''+ config.endpoint.api_mcard_inquiry.protocol +'://'+ config.endpoint.api_mcard_inquiry.url +':'+ config.endpoint.api_mcard_inquiry.port +'/api/mcard/' + req.body.MBCODE)
         .then(function(mcard){
           console.log("mcard found", mcard);
+		  mcard = JSON.parse(mcard);
 		  if(isNaN(mcard[0].MBID)){
 		  	res.json({
 		  		"fnme": mcard[0].MBENAM,

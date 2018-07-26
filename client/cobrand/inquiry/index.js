@@ -22,7 +22,7 @@ var inquiry_by_partner = require('./route/inquiry_by_partner');
 var validate_id = require('./route/validate_id');
 app.use('/cobrand/inquiry_by_id', inquiry_by_id);
 app.use('/cobrand/inquiry_mpoint', inquiry_by_partner);
-app.use('/cobrand/validateID', validate_id);
+app.use('/cobrand/validateid', validate_id);
 
 /*
 app.post('/byid', function(req,res){

@@ -8,7 +8,7 @@ router.post('/', function(req, res){
  
   //req.params.MBCODE ex. /validation/partner/10200
   //req.query.MBCODE  ex. /validation/partner?MBCODE=10200
-  const validator_partner_url = ''+ config.endpoint.api_validator.protocol +'://'+ config.endpoint.api_validator.url +':'+ config.endpoint.api_validator.port +'/validation/partner/10200';
+  const validator_partner_url = ''+ config.endpoint.api_validator.protocol +'://'+ config.endpoint.api_validator.url +':'+ config.endpoint.api_validator.port +'/validation/partnerid/'+req.body.PARTNER_ID;
   const validator_schema_url = ''+ config.endpoint.api_validator.protocol +'://'+ config.endpoint.api_validator.url +':'+ config.endpoint.api_validator.port +'/validation/schema/';
 
   var options = {
@@ -28,10 +28,11 @@ router.post('/', function(req, res){
       console.log('get partner');
       rp.get(''+ config.endpoint.api_lookup.protocol +'://'+ config.endpoint.api_lookup.url +':'+ config.endpoint.api_lookup.port +'/api/lookup/partner/nbr/' + req.body.PARTNER_NBR + '/' + req.body.PARTNER_ID)
         .then(function(partner){
-          console.log("Partner found", partner);
+          console.log("Found Partner", partner);
 		  rp.get(''+ config.endpoint.api_partner_inquiry.protocol +'://'+ config.endpoint.api_partner_inquiry.url +':'+ config.endpoint.api_partner_inquiry.port +'/api/inquiry_partner/' + req.body.PARTNER_NBR + '/' + req.body.PARTNER_ID)
 		  .then(function(partner_result){
-			  console.log("MCard found", partner_result);
+			  console.log("Found MCard", partner_result);
+			  partner_result = JSON.parse(partner_result);
 			  if (partner_result.length == 1) {
                   //101 - success
 				var MBEXP_ = 0;

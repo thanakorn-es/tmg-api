@@ -8,7 +8,7 @@ router.post('/', function(req, res){
  
   //req.params.MBCODE ex. /validation/partner/10200
   //req.query.MBCODE  ex. /validation/partner?MBCODE=10200
-  const validator_partner_url = ''+ config.endpoint.api_validator.protocol +'://'+ config.endpoint.api_validator.url +':'+ config.endpoint.api_validator.port +'/validation/partner/10200';
+  const validator_partner_url = ''+ config.endpoint.api_validator.protocol +'://'+ config.endpoint.api_validator.url +':'+ config.endpoint.api_validator.port +'/validation/partnerid/'+req.body.PARTNER_ID;
   const validator_schema_url = ''+ config.endpoint.api_validator.protocol +'://'+ config.endpoint.api_validator.url +':'+ config.endpoint.api_validator.port +'/validation/schema/';
 
   var options = {
@@ -29,7 +29,9 @@ router.post('/', function(req, res){
       rp.get(''+ config.endpoint.api_lookup.protocol +'://'+ config.endpoint.api_lookup.url +':'+ config.endpoint.api_lookup.port +'/api/lookup/country/' + req.body.CUST_COUNTRYCODE)
         .then(function(country){
           console.log("country found", country);
-		  if(country.length > 0){
+		  country = JSON.parse(country);
+		  if(country.length > 0){			  
+			  console.log(country[0]);
 			  console.log(country[0].CNTRYCD3);
 			  var cust_id = country[0].CNTRYCD3 + req.body.CUST_ID;
 			  console.log('Passport : '+cust_id);
@@ -40,6 +42,8 @@ router.post('/', function(req, res){
 		  
 		  rp.get(''+ config.endpoint.api_partner_inquiry.protocol +'://'+ config.endpoint.api_partner_inquiry.url +':'+ config.endpoint.api_partner_inquiry.port +'/api/inquiry_id/' + cust_id + '/' + req.body.PARTNER_ID)
 		  .then(function(partner_result){
+			  console.log("Found MCard", partner_result);
+			  partner_result = JSON.parse(partner_result);
 			  if (partner_result.length == 1) {
                 //101 - success
 				var MBEXP_ = 0;

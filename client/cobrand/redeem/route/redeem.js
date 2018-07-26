@@ -8,7 +8,7 @@ router.post('/', function(req, res){
  
   //req.params.MBCODE ex. /validation/partner/10200
   //req.query.MBCODE  ex. /validation/partner?MBCODE=10200
-  const validator_partner_url = ''+ config.endpoint.api_validator.protocol +'://'+ config.endpoint.api_validator.url +':'+ config.endpoint.api_validator.port +'/validation/partner/10200';
+  const validator_partner_url = ''+ config.endpoint.api_validator.protocol +'://'+ config.endpoint.api_validator.url +':'+ config.endpoint.api_validator.port +'/validation/partnerid/'+req.body.PARTNER_ID;
   const validator_redeem_url = ''+ config.endpoint.api_validator.protocol +'://'+ config.endpoint.api_validator.url +':'+ config.endpoint.api_validator.port +'/validation/REDEEM';
   const validator_schema_url = ''+ config.endpoint.api_validator.protocol +'://'+ config.endpoint.api_validator.url +':'+ config.endpoint.api_validator.port +'/validation/schema/';
 
@@ -46,6 +46,7 @@ router.post('/', function(req, res){
 			rp.get(''+ config.endpoint.api_partner_inquiry.protocol +'://'+ config.endpoint.api_partner_inquiry.url +':'+ config.endpoint.api_partner_inquiry.port +'/api/redeem_partner/' + req.body.PARTNER_NBR + '/' + req.body.PARTNER_ID)
 				.then(function(partner_result){
 					console.log("MCard found", partner_result);
+					partner_result = JSON.parse(partner_result);
 					var cal_POINTBURN = 0;
 					if (req.body.POINTBURN_TYPE == "DP") {                
 						cal_POINTBURN = parseInt(req.body.POINTBURN_MPOINT);
@@ -93,6 +94,7 @@ router.post('/', function(req, res){
 					
 					rp.get(''+ config.endpoint.api_mcard_command.protocol +'://'+ config.endpoint.api_mcard_command.url +':'+ config.endpoint.api_mcard_command.port +'/api/redeem/get_receipt/' + date_str4 + '/' + mtyr)
 					.then(function(rcp_result){
+						rcp_result = JSON.parse(rcp_result);
 						if(rcp_result.length > 0){										
 							mrec_n = mtyr + (parseInt(rcp_result[0].RECN)+1).toString();
 							
@@ -133,6 +135,7 @@ router.post('/', function(req, res){
 						  };
 						rp.post(log_1p)
 						.then(function(trans_result){
+							trans_result = JSON.parse(trans_result);
 							rp.get(''+ config.endpoint.api_mcard_command.protocol +'://'+ config.endpoint.api_mcard_command.url +':'+ config.endpoint.api_mcard_command.port +'/api/redeem/get_mcrr2p/' + date_str4 + '/' + partner_result[0].MBCODE)
 							.then(function(p2_result){
 								if(p2_result.length < 1){
