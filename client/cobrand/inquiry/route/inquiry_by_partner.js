@@ -8,7 +8,7 @@ router.post('/', function(req, res){
  
   //req.params.MBCODE ex. /validation/partner/10200
   //req.query.MBCODE  ex. /validation/partner?MBCODE=10200
-  const validator_partner_url = ''+ config.endpoint.api_validator.protocol +'://'+ config.endpoint.api_validator.url +':'+ config.endpoint.api_validator.port +'/validation/partner/10200';
+  const validator_partner_url = ''+ config.endpoint.api_validator.protocol +'://'+ config.endpoint.api_validator.url +':'+ config.endpoint.api_validator.port +'/validation/partnerid/'+req.body.PARTNER_ID;
   const validator_schema_url = ''+ config.endpoint.api_validator.protocol +'://'+ config.endpoint.api_validator.url +':'+ config.endpoint.api_validator.port +'/validation/schema/';
 
   var options = {
@@ -28,12 +28,29 @@ router.post('/', function(req, res){
       console.log('get partner');
       rp.get(''+ config.endpoint.api_lookup.protocol +'://'+ config.endpoint.api_lookup.url +':'+ config.endpoint.api_lookup.port +'/api/lookup/partner/nbr/' + req.body.PARTNER_NBR + '/' + req.body.PARTNER_ID)
         .then(function(partner){
-          console.log("Partner found", partner);
+          console.log("Found Partner", partner);
 		  rp.get(''+ config.endpoint.api_partner_inquiry.protocol +'://'+ config.endpoint.api_partner_inquiry.url +':'+ config.endpoint.api_partner_inquiry.port +'/api/inquiry_partner/' + req.body.PARTNER_NBR + '/' + req.body.PARTNER_ID)
 		  .then(function(partner_result){
-			  console.log("MCard found", partner_result);
+			  console.log("Found MCard", partner_result);
+			  partner_result = JSON.parse(partner_result);
 			  if (partner_result.length == 1) {
                   //101 - success
+				var MBEXP_ = 0;
+				var MBPOINT_ = 0;
+				var MBCEXP_ = 0;
+				var MBDATT_ = 0;
+				if(partner_result[0].MBEXP){
+					MBEXP_ = partner_result[0].MBEXP;
+				}
+				if(partner_result[0].MBPOINT){
+					MBPOINT_ = partner_result[0].MBPOINT;
+				}
+				if(partner_result[0].MBCEXP){
+					MBCEXP_ = partner_result[0].MBCEXP;
+				}
+				if(partner_result[0].MBDATT){
+					MBDATT_ = partner_result[0].MBDATT;
+				}
                   res.json({
                       "RESP_SYSCDE": "",
                       "RESP_DATETIME": "",
@@ -41,10 +58,10 @@ router.post('/', function(req, res){
 					  "RESP_MSG": "Success",
                       "MCARD_NUM": partner_result[0].MBCODE,
                       "CARD_TYPE": partner_result[0].MBMEMC,
-                      "CARD_EXPIRY_DATE": partner_result[0].MBEXP,
-                      "CARD_POINT_BALANCE": partner_result[0].MBPOINT,
-                      "CARD_POINT_EXPIRY": partner_result[0].MBCEXP,
-                      "CARD_POINT_EXP_DATE": partner_result[0].MBDATT,
+                      "CARD_EXPIRY_DATE": MBEXP_,
+                      "CARD_POINT_BALANCE": MBPOINT_,
+                      "CARD_POINT_EXPIRY": MBCEXP_,
+                      "CARD_POINT_EXP_DATE": MBDATT_,
                       "DEMO_TH_TITLE": partner_result[0].MBTTLE,
                       "DEMO_TH_NAME": partner_result[0].MBTNAM,
                       "DEMO_TH_SURNAME": partner_result[0].MBTSUR,
@@ -55,6 +72,22 @@ router.post('/', function(req, res){
 				return;
               } else if (partner_result.length > 1) {
                   //102 - more than 1 card
+				  var MBEXP_ = 0;
+				var MBPOINT_ = 0;
+				var MBCEXP_ = 0;
+				var MBDATT_ = 0;
+				if(partner_result[0].MBEXP){
+					MBEXP_ = partner_result[0].MBEXP;
+				}
+				if(partner_result[0].MBPOINT){
+					MBPOINT_ = partner_result[0].MBPOINT;
+				}
+				if(partner_result[0].MBCEXP){
+					MBCEXP_ = partner_result[0].MBCEXP;
+				}
+				if(partner_result[0].MBDATT){
+					MBDATT_ = partner_result[0].MBDATT;
+				}
                   res.json({
                       "RESP_SYSCDE": "",
                       "RESP_DATETIME": "",
@@ -62,10 +95,10 @@ router.post('/', function(req, res){
 					  "RESP_MSG": "Success, found many Mcard",
                       "MCARD_NUM": partner_result[0].MBCODE,
                       "CARD_TYPE": partner_result[0].MBMEMC,
-                      "CARD_EXPIRY_DATE": partner_result[0].MBEXP,
-                      "CARD_POINT_BALANCE": partner_result[0].MBPOINT,
-                      "CARD_POINT_EXPIRY": partner_result[0].MBCEXP,
-                      "CARD_POINT_EXP_DATE": partner_result[0].MBDATT,
+                      "CARD_EXPIRY_DATE": MBEXP_,
+                      "CARD_POINT_BALANCE": MBPOINT_,
+                      "CARD_POINT_EXPIRY": MBCEXP_,
+                      "CARD_POINT_EXP_DATE": MBDATT_,
                       "DEMO_TH_TITLE": partner_result[0].MBTTLE,
                       "DEMO_TH_NAME": partner_result[0].MBTNAM,
                       "DEMO_TH_SURNAME": partner_result[0].MBTSUR,

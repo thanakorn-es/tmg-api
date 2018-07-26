@@ -20,7 +20,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 var v_partner = require('./route/v_partner');
 var v_inquiry = require('./route/v_mcard');
 var v_schema = require('./route/v_schema')
-app.use('/validation/partner', v_partner);
+app.use('/validation/partnerid', v_partner);
 app.use('/validation/schema', v_schema);
 app.use('/validation/inquiry', v_inquiry);
 

@@ -21,7 +21,7 @@ router.get('/:PARTNER_NBR/:PARTNER_ID', function(req,res){
             stmt += " MVM01P.MBETLE,MVM01P.MBENAM,MVM01P.MBESUR ";
             stmt += " from MBRFLIB/MVM01P MVM01P";
             stmt += " inner join MBRFLIB/PM200MP PM200MP on MVM01P.MBCODE = PM200MP.MBCODE";
-            stmt += " inner join MBRFLIB/MCRS2P MCRS2P on MVM01P.MBCODE = MCRS2P.MBCODE";
+            stmt += " left join MBRFLIB/MCRS2P MCRS2P on MVM01P.MBCODE = MCRS2P.MBCODE";
             stmt += " where PM200MP.PNID = '" + req.params.PARTNER_ID + "' and PM200MP.PNNUM = '" + req.params.PARTNER_NBR + "'";
   pool.query(stmt)
     .then(function(result) {

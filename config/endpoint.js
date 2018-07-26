@@ -1,61 +1,61 @@
 const config = {  
 	icfs_inquiry:
 	{
-		url: '172.17.0.6',
+		url: '192.168.0.90',
 		protocol: 'http',
 		port: '8090'
 	},
 	mapp_inquiry:
 	{
-		url: '172.17.0.4',
+		url: '192.168.0.89',
 		protocol: 'http',
 		port: '8089'
 	},
 	api_validator:
 	{
-		url: '172.17.0.2',
+		url: '192.168.0.80',
 		protocol: 'http',
 		port: '8080'
 	},
 	api_lookup:
 	{
-		url: '172.17.0.5',
+		url: '192.168.0.81',
 		protocol: 'http',
 		port: '8081'
 	},
 	api_mcard_inquiry:
 	{
-		url: '172.17.0.3',
+		url: '192.168.0.82',
 		protocol: 'http',
 		port: '8082'
 	},
 	api_mcard_command:
 	{
-		url: '172.17.0.9',
+		url: '192.168.0.83',
 		protocol: 'http',
 		port: '8083'
 	},
 	api_partner_inquiry:
 	{
-		url: '172.17.0.7',
+		url: '192.168.0.87',
 		protocol: 'http',
 		port: '8087'
 	},
 	client_cobrand_inquiry:
 	{
-		url: '172.17.0.8',
+		url: '192.168.0.84',
 		protocol: 'http',
 		port: '8084'
 	},
 	client_cobrand_redeem:
 	{
-		url: '172.17.0.10',
+		url: '192.168.0.85',
 		protocol: 'http',
 		port: '8085'
 	},
 	client_cobrand_command:
 	{
-		url: '10.90.230.96',
+		url: '192.168.0.86',
 		protocol: 'http',
 		port: '8086'
 	}

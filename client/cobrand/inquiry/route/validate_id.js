@@ -8,7 +8,7 @@ router.post('/', function(req, res){
  
   //req.params.MBCODE ex. /validation/partner/10200
   //req.query.MBCODE  ex. /validation/partner?MBCODE=10200
-  const validator_partner_url = ''+ config.endpoint.api_validator.protocol +'://'+ config.endpoint.api_validator.url +':'+ config.endpoint.api_validator.port +'/validation/partner/10200';
+  const validator_partner_url = ''+ config.endpoint.api_validator.protocol +'://'+ config.endpoint.api_validator.url +':'+ config.endpoint.api_validator.port +'/validation/partnerid/'+req.body.PARTNER_ID;
   const validator_schema_url = ''+ config.endpoint.api_validator.protocol +'://'+ config.endpoint.api_validator.url +':'+ config.endpoint.api_validator.port +'/validation/schema/';
 
   var options = {
@@ -28,6 +28,7 @@ router.post('/', function(req, res){
       console.log('get partner');
       rp.get(''+ config.endpoint.api_partner_inquiry.protocol +'://'+ config.endpoint.api_partner_inquiry.url +':'+ config.endpoint.api_partner_inquiry.port +'/api/validate_id/' + req.body.CUST_ID)
         .then(function(partner){
+			partner = JSON.parse(partner);
 			if (partner.length == 1) {
                 //101 - success
                 res.json({
