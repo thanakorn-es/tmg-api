@@ -18,21 +18,32 @@ describe('iCFS Inquiry', function(){
   before(function(){});
   after(function(){});
 
-  context('Integration Test', function(){    
+  context('Correct MCard', function(){    
     it('should return HTTP status 200', function(done){    
-      request.get({          
+      request.post({          
         uri: configHost.protocol + '://' + configHost.url + ':' + configEndpoint.icfs_inquiry.port + configEndpoint.icfs_inquiry.path,
         resolveWithFullResponse: true
       })
       .expect('Content-Type','application/json')
       .then(function(response){
-        //console.log(response);
-        //console.log(JSON.parse(response.body));
-        //console.log(JSON.parse(response.statusCode));
         expect(response.statusCode).to.equal(200);
       })
       .expect(200, done);
     });
+  });
+  context('Incorrect MCard', function(){    
+    it('should return HTTP status 400', function(done){
+      request.post({          
+        uri: configHost.protocol + '://' + configHost.url + ':' + configEndpoint.icfs_inquiry.port + configEndpoint.icfs_inquiry.path,
+        resolveWithFullResponse: true
+      })
+      .expect('Content-Type','application/json')
+      .then(function(response){        
+        expect(response.statusCode).to.equal(400);
+        expect(response.body).to.be.null;
+      })
+      .expect(200, done);
+    })
   });
 });
 
