@@ -20,7 +20,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 var mcard = require('./route/index');
 
 app.use('/api/mcard', mcard);
-
+app.get('/api/mcard/test/123', function(req,res){
+  res.send('fwefew');
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

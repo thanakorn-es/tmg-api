@@ -15,10 +15,11 @@ const pool = require('node-jt400').pool(config_400);
 router.get('/:MBCODE', function(req,res){
   // get mcard 
   console.log(req.params.MBCODE);
-  	var stmt = "select *";
-        stmt += " from MBRFLIB/MVM01P MVM01P";
-		stmt += " left join MBRFLIB/MCRS2P MCRS2P on MVM01P.MBCODE = MCRS2P.MBCODE";
-        stmt += " where MVM01P.MBCODE = '" + req.params.MBCODE + "'";
+  var stmt = "select *";
+  stmt += " from MBRFLIB/MVM01P MVM01P";
+  stmt += " left join MBRFLIB/MCRS2P MCRS2P on MVM01P.MBCODE = MCRS2P.MBCODE";
+  stmt += " where MVM01P.MBCODE = '" + req.params.MBCODE + "'";
+    
   pool.query(stmt)
     .then(function(result) {
       console.log(result.length);

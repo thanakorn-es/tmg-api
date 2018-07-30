@@ -6,22 +6,28 @@
     "start": "node ./bin/www",
     "start-client-cobrand-inquiry": "node ./bin/www client/cobrand/inquiry 8080",
     "start-client-cobrand-command": "node ./bin/www client/cobrand/command 8081",
-    "start-api-mcard-cmd": "node ./bin/www api/mcard/command 8089",
     "start-api-mcard-cmd": "node ./bin/www api/mcard/query 8090"
   },
   "dependencies": {
+    "amqplib": "^0.5.2",
+    "bluebird": "^3.5.1",
     "body-parser": "~1.18.2",
     "consul": "^0.33.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "ejs": "~2.5.7",
     "express": "~4.15.5",
+    "fs": "0.0.1-security",
     "joi": "^13.4.0",
+    "mongodb": "^3.1.1",
     "morgan": "~1.9.0",
     "node-jt400": "^1.6.1",
     "request": "^2.87.0",
     "request-promise": "^4.2.2",
-    "serve-favicon": "~2.4.5"
+    "serve-favicon": "~2.4.5",
+    "sqlite3": "^4.0.2",
+    "uuid": "^3.3.2",
+    "winston": "^3.0.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
@@ -29,6 +35,7 @@
     "mocha": "^5.2.0",
     "sinon": "^6.0.1",
     "sinon-chai": "^3.2.0",
+    "supertest": "^3.1.0",
     "wd": "^1.10.1"
   }
 }
