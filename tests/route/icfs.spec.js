@@ -8,7 +8,6 @@ const chai = require('chai');
 const expect = chai.expect;
 const sinon = require('sinon');
 
-const configHost = require('../../config/host');
 const configEndpoint = require('../../config/endpoint');
 
 describe('iCFS Inquiry', function(){
@@ -19,140 +18,28 @@ describe('iCFS Inquiry', function(){
   after(function(){});
 
   context('Correct MCard', function(){    
-    it('should return HTTP status 200', function(done){    
-      request.post({          
-        uri: configHost.protocol + '://' + configHost.url + ':' + configEndpoint.icfs_inquiry.port + configEndpoint.icfs_inquiry.path,
-        resolveWithFullResponse: true
-      })
-      .expect('Content-Type','application/json')
-      .then(function(response){
-        expect(response.statusCode).to.equal(200);
-      })
-      .expect(200, done);
+    it('should found mcard', function(){    
+      return request.post(configEndpoint.icfs_inquiry.path)
+        .send({MBCODE: "7109000900003026"})
+        .expect(200)
+        .then(function(response){
+          expect(response.body.fnme).to.be.a('string');
+          expect(response.body.fnme).to.not.be.empty;
+          expect(response.body.lnme).to.be.a('string');
+          expect(response.body.lnme).to.not.be.empty;
+          expect(response.body.lgnme).to.be.a('string');
+          expect(response.body.mobile).to.be.a('string');
+        });
     });
   });
   context('Incorrect MCard', function(){    
-    it('should return HTTP status 400', function(done){
-      request.post({          
-        uri: configHost.protocol + '://' + configHost.url + ':' + configEndpoint.icfs_inquiry.port + configEndpoint.icfs_inquiry.path,
-        resolveWithFullResponse: true
-      })
-      .expect('Content-Type','application/json')
-      .then(function(response){        
-        expect(response.statusCode).to.equal(400);
-        expect(response.body).to.be.null;
-      })
-      .expect(200, done);
-    })
-  });
-});
-
-/*
-describe('Inquiry', function() {
-  describe('MCard with correct information', function(){
-    it('yield fnme,lnme,lgnme,mobile', function(done) {  
-      supertest(app)
-        .post('/icfs/inquiry')
-        .send({MBCODE: '7109000900003026'})
-        .set('Accept', 'application/json')
-        .expect(200)
-        .then(function(result){
-          expect(result.fname).is.string();
-          expect(result.lname).is.string();
-        })
-        .end(function(err, res) {
-          if (err) return done(err);
-            done();
+    it('should not found mcard', function(){
+      return request.post(configEndpoint.icfs_inquiry.path)
+        .send({MBCODE: "7109000900003025"})
+        .expect(400)
+        .then(function(response){
+          expect(response.body).to.be.empty;
         });
-
-        /**
-         * 
-         *  var TodoMock = sinon.mock(Todo);
-    var expectedResult = {fnme: 'TEST', lnme: 'CARD', lgnme: 'TH', mobile: ""};
-
-    TodoMock.expects('find').yields(null, expectedResult);
-    Todo.find(function (err, result) {
-        TodoMock.verify();
-        TodoMock.restore();
-        expect(result.status).to.be.true;
-        done();
-    });   
-         
     });
   });
 });
-*/
-/*
-
-context('Functional Test with Mock', function(){ 
-  //var stub, responseObject, responseBody;
-
-  beforeEach(function(){  
-    stub = sinon.stub(request,'get');
-    responseObject = {
-      statusCode: 200,
-      headers: {
-        'content-type': 'application/json'
-      }
-    };
-    responseBody = {
-      status: 'success',
-      data: [
-        {
-          fnme: 'TEST',
-          lnme: 'CARD',
-          lgnme: 'TH',
-          mobile: '0991190202'
-        },
-        {
-          fnme: 'TEST',
-          lnme: 'CARD',
-          lgnme: 'TH',
-          mobile: '0991190202'
-        }        
-      ]
-    };
-  });
-  afterEach(function(){
-    // delete IDCard: 1100800302653, MBCODE: xxxxxxxxxxx
-    stub.restore();
-  });
-
-  it('test', function(){
-    stub.yields(null,responseObject, JSON.stringify(responseBody));
-    request.get('/icfs/inquiry', function(err ,res, body){
-      //console.log(res);
-    })
-        .then(function(res){
-       
-      })
-    //const greaterThanTwenty = sinon.stub().returns('something');
-    //greaterThanTwenty(0).should.eql('something');
-    
-    //expect(true).to.equal(true);
-  });
-  
-  it('', function(done){
-    done();
-    expect(res.body.success).to.equal(true);
-    expect(res.statusCode,200);
-
-
-
-    supertest(app)
-    .post('/icfs/inquiry')
-    .send({MBCODE: '7109000900003026'})
-    .set('Accept', 'application/json')
-    .expect(200)
-    .then(function(result){
-      expect(result.fname).is.string();
-      expect(result.lname).is.string();
-    })
-    .end(function(err, res) {
-      if (err) return done(err);
-        done();
-    });
-  });
-  
-});
-*/
