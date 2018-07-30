@@ -3,15 +3,53 @@ const chai = require('chai');
 const expect = chai.expect;
 const sinon = require('sinon');
 const app = require('../../api/mcard/command');
+const request = supertest(app);
 
 describe('Register MCard', function(){
-  context('Perfectly Success', function(){
-    before(function(){});
-    beforeEach(function(){});
+  before(function(){});
+  after(function(){});
+
+  context('Functional Test', function(){ 
+    beforeEach(function(){  
+      this.post = sinon.stub(request,'post');
+      const responseObject = {
+        statusCode: 200,
+        headers: {
+          'content-type': 'application/json'
+        }
+      };
+      const responseBody = {
+        status: 'success',
+        data: [
+          {
+            id: 4,
+            name: 'The Land Before Time',
+            genre: 'Fantasy',
+            rating: 7,
+            explicit: false
+          },
+          {
+            id: 5,
+            name: 'Jurassic Park',
+            genre: 'Science Fiction',
+            rating: 9,
+            explicit: true
+          }        
+        ]
+      };
+    });
     afterEach(function(){
       // delete IDCard: 1100800302653, MBCODE: xxxxxxxxxxx
     });
-    after(function(){});
+
+    it('test', function(){
+      supertest
+      const greaterThanTwenty = sinon.stub().returns('something');
+      greaterThanTwenty(0).should.eql('something');
+      
+      expect(true).to.equal(true);
+    });
+    /*
     it('', function(done){
       done();
       expect(res.body.success).to.equal(true);
@@ -33,5 +71,6 @@ describe('Register MCard', function(){
           done();
       });
     });
+    */
   });
 });
