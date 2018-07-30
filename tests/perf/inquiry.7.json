@@ -1,0 +1,27 @@
+{
+	"config":{
+		"target": "https://mds.themall.co.th",
+		"phases": [
+			{
+				"duration": 600,
+				"arrivalRate": 100,
+				"rampTo": 500
+			}
+		]
+	},
+	"scenarios": [{
+		"name": "Inquiry",
+    		"flow": [{
+			"post": {
+          			"url": "/scb/cobrand/inquiry_mpoint_byid",
+          			"headers": {
+					"content-type": "application/json",
+					"X-ibm-Client-id": "a5f8d31b-0d6f-426f-95de-e672573a51be",
+	    				"X-ibm-Client-secret": "vW8iC4aB1nL4bH8rM1qT4cG5fH6iX8fM6xI7nY4jE5tS5nA2sH"
+				},
+				"body": '{"PARTNER_ID":"10200","CUST_ID":3001598793505,"CUST_COUNTRYCODE":"US","SELRANGEDT":{"START":0,"LIMIT":1}}'
+			}
+		}]
+	}]
+}
+

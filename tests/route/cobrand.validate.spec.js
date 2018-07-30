@@ -35,7 +35,7 @@ describe('Cobrand Inquiry MPoint', function(){
         .expect(200)
         .then(function(response){
           expect(response.body.RESP_CDE).to.equal(102);       
-          expect(response.body.RESP_MSG).to.equal('Success');
+          expect(response.body.RESP_MSG).to.equal('Success, found many MCard');
           expect(response.body.MCARD_NUM).to.be.a('string');
           expect(response.body.MCARD_NUM).to.not.be.empty;   
         });
@@ -46,7 +46,7 @@ describe('Cobrand Inquiry MPoint', function(){
         .expect(200)
         .then(function(response){
           expect(response.body.RESP_CDE).to.equal(301);       
-          expect(response.body.RESP_MSG).to.equal('Success');
+          expect(response.body.RESP_MSG).to.equal('Not success/ Not found Partner ID/Partner NBR');
           expect(response.body.MCARD_NUM).to.be.a('string');
           expect(response.body.MCARD_NUM).to.be.empty;   
         });
