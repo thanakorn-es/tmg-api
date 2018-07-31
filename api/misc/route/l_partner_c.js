@@ -12,21 +12,19 @@ const config_400 = {
 };
 const pool = require('node-jt400').pool(config_400);
 
-//  POST /api/inquiry_partner
-router.get('/:CUST_COUNTRYCODE', function(req,res){
+//  POST /api/lookup/partner/custid
+router.get('/:CUSTID', function(req,res){
   // get mcard 
-  console.log(req.params.CUST_COUNTRYCODE);
-  	var stmt = "select CM100MP.CNTRYCD3 from MBRFLIB/CM100MP CM100MP where CM100MP.CNTRYCD2 = '" + req.params.CUST_COUNTRYCODE + "'";
+  	var stmt = "select *";
+        stmt += " from MBRFLIB/PM200MP PM200MP";
+        stmt += " inner join MBRFLIB/PM110MP PM110MP on PM200MP.PNID = PM110MP.PNID and PM200MP.PNNUM = PM110MP.PNNUM";
+        stmt += " where PM200MP.MBID = '" + req.params.CUSTID + "'";
   pool.query(stmt)
     .then(function(result) {
       console.log(result.length);
       console.log(result);
-	  
-	  if(req.params.CUST_COUNTRYCODE == '' || typeof req.params.CUST_COUNTRYCODE == 'undefined' ){
-		  res.status(200);
-		  res.json({});
-	  }
-      else if(result.length > 0){
+
+      if(result.length > 0){
         res.status(200);
         res.json(result);
         
@@ -37,7 +35,7 @@ router.get('/:CUST_COUNTRYCODE', function(req,res){
       }
     })
     .catch(function(err){
-		console.log(err);
+
     });
 });
 

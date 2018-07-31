@@ -18,8 +18,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 var mcard = require('./route/index');
+var genmbcode = require('./route/genmbcode');
 
 app.use('/api/mcard', mcard);
+app.use('/api/genmbcode', genmbcode);
+
 app.get('/api/mcard/test/123', function(req,res){
   res.send('fwefew');
 });

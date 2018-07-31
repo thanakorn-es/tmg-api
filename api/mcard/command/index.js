@@ -17,6 +17,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//var register_member = require('./route/register_member');
+var insert_custid = require('./route/insert_custid');
+var insert_mvm01p = require('./route/insert_mvm01p');
+var update_mvm01p = require('./route/update_mvm01p');
+var insert_mvm02p = require('./route/insert_mvm02p');
+var insert_mpotf1p = require('./route/insert_mpotf1p');
+var update_mpotf1p = require('./route/update_mpotf1p');
+
+
 var redeem_update_point = require('./route/redeem_update_point');
 var redeem_get_mcrr2p = require('./route/redeem_get_mcrr2p');
 var redeem_insert_mcrr2p = require('./route/redeem_insert_mcrr2p');
@@ -24,6 +33,16 @@ var redeem_get_receipt = require('./route/redeem_get_receipt');
 var redeem_update_receipt = require('./route/redeem_update_receipt');
 var redeem_insert_receipt = require('./route/redeem_insert_receipt');
 var redeem_insert_transaction = require('./route/redeem_insert_transaction');
+
+//app.use('/api/mcard/register_member', register_member);
+app.use('/api/mcard/insert_custid', insert_custid);
+app.use('/api/mcard/insert_mvm01p', insert_mvm01p);
+app.use('/api/mcard/update_mvm01p', update_mvm01p);
+app.use('/api/mcard/insert_mvm02p', insert_mvm02p);
+app.use('/api/mcard/insert_mpotf1p', insert_mpotf1p);
+app.use('/api/mcard/update_mpotf1p', update_mpotf1p);
+
+
 app.use('/api/redeem/get_mcrr2p', redeem_get_mcrr2p);
 app.use('/api/redeem/insert_mcrr2p', redeem_insert_mcrr2p);
 app.use('/api/redeem/update_point', redeem_update_point);
