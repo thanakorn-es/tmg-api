@@ -12,7 +12,7 @@ const config_400 = {
 };
 const pool = require('node-jt400').pool(config_400);
 
-router.get('/:MBCODE', function (req, res) {
+router.post('/:MBCODE', function (req, res) {
 
 	var insert_mvm02 = "insert into MBRFLIB/MVM02P";
 	insert_mvm02 += " (MBAPP,MBCODE,MBCRE9)";

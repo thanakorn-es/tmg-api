@@ -91,7 +91,7 @@ var config = require('../../../../config/')
 											console.log('Insert PM110MP');
 											var options = {
 												method: 'POST',
-												uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/inter_pm110mp/' + ctry,
+												uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm110mp/' + ctry,
 												body: req.body,
 												json: true // Automatically stringifies the body to JSON
 											};
@@ -101,7 +101,7 @@ var config = require('../../../../config/')
 												console.log('Insert PM200MP');
 												var options = {
 													method: 'POST',
-													uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/inter_pm200/' + mb,
+													uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm200/' + mb,
 													body: req.body,
 													json: true // Automatically stringifies the body to JSON
 												};
@@ -211,14 +211,16 @@ var config = require('../../../../config/')
 							})
 							.catch (function (err) {
 								console.log('Insert MCRTA7P : Fail');
-								///////////////////// ///////////////////////////////
+								///////////////////// TMG ///////////////////////////////
 								console.log('Get running number');
 								rp.get('' + config.endpoint.api_mcard_inquiry.protocol + '://' + config.endpoint.api_mcard_inquiry.url + ':' + config.endpoint.api_mcard_inquiry.port + '/api/genmbcode')
-								.then(function (result) {
-									console.log(result);
-									result = JSON.parse(result);
-									console.log('Running number : ' + result[0].MBCODE_R);
-									mb = result[0].MBCODE_R;
+								.then(function (MB_result) {
+									console.log(MB_result);									
+									MB_result = JSON.parse(MB_result);
+									console.log(MB_result.MBCODE_R);
+									console.log(MB_result);
+									console.log('Running number : ' + MB_result.MBCODE_R);
+									mb = MB_result.MBCODE_R;
 									var options = {
 										method: 'POST',
 										uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_mvm01p/' + mb,
@@ -242,7 +244,7 @@ var config = require('../../../../config/')
 											console.log('Insert PM110MP');
 											var options = {
 												method: 'POST',
-												uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/inter_pm110mp/' + ctry,
+												uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm110mp/' + ctry,
 												body: req.body,
 												json: true // Automatically stringifies the body to JSON
 											};
@@ -252,7 +254,7 @@ var config = require('../../../../config/')
 												console.log('Insert PM200MP');
 												var options = {
 													method: 'POST',
-													uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/inter_pm200/' + mb,
+													uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm200/' + mb,
 													body: req.body,
 													json: true // Automatically stringifies the body to JSON
 												};
