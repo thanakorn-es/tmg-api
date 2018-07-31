@@ -111,11 +111,18 @@ const _template = {
 	PARTNER_ID: Joi.required(), 
 	PARTNER_NBR: Joi.required(),
   }),
+  "REGISTER": Joi.object().keys({
+    PARTNER_ID: Joi.string().length(5).required(),
+  }),
 }
 
 // /validation/schema/:SCHEMANO
 router.post('/:SCHEMANO', function(req,res){
   console.log('check schema 1');
+  if( req.params.SCHEMANO == 'REGISTER' ){
+      res.status(200);
+      res.end();
+    }
   if( !("mapp_inquiry" in _template) ){
     console.log('check schema 1.2');
     res.status(404);

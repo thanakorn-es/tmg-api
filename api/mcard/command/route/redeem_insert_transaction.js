@@ -12,7 +12,7 @@ const config_400 = {
 };
 const pool = require('node-jt400').pool(config_400);
 //  POST /api/mcard/:MBCODE
-router.get('/:DATE/:TIME/:MBAPP/:MBCODE/:MRCP/:AGEN', function(req,res){
+router.post('/:DATE/:TIME/:MBAPP/:MBCODE/:MRCP/:AGEN', function(req,res){
   // get mcard 
   console.log(req.params.MBCODE);
   if(req.body.POINTBURN_TYPE == 'DP'){
@@ -193,21 +193,17 @@ router.get('/:DATE/:TIME/:MBAPP/:MBCODE/:MRCP/:AGEN', function(req,res){
 	  
 	  var point_log_stmt_1p = "insert into MBRFLIB/MCRR1P";
 	  point_log_stmt_1p += "(MBAPP,MBCODE,MBBRH,MBDAT,MBRDC,MBTYR,MBRECN,MBRUN,MBPOINT,MBPIE,MBHOR,MBFLG,MBMILE,MBROP,PDNAME,VDCODE,MBAMT,MBPOIND,MBAMTDP,MBAPVO,MBREFT,TERMINAL3,MBDEPE,MBPROC,MBPRON,MBSAMT,MBUAMT,MBRATE,MBAGEN,PNNUM,PNID)";
-	  point_log_stmt_1p += " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";												
+	  point_log_stmt_1p += " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	  console.log(point_log_params_1p);
 	  pool.insertAndGetId(point_log_stmt_1p, point_log_params_1p)
       .then(function(result) {
       console.log(result.length);
       console.log(result);
 
-      if(result.length > 0){
         res.status(200);
         res.json(result);
         
-      }
-      else{
-        res.status(404);
-        res.end();
-      }
+
     })
     .catch(function(err){
 		res.status(500);

@@ -17,16 +17,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-var redeem_dp = require('./route/redeem_dp');
-var redeem_sp = require('./route/redeem_sp');
-var redeem_pr = require('./route/redeem_pr');
-var redeem_cc = require('./route/redeem_cc');
-var redeem_mi = require('./route/redeem_mi');
-app.use('/api/redeem/dp', redeem_dp);
-app.use('/api/redeem/sp', redeem_sp);
-app.use('/api/redeem/pr', redeem_pr);
-app.use('/api/redeem/cc', redeem_cc);
-app.use('/api/redeem/mi', redeem_mi);
+var update_pm110mp = require('./route/update_pm110mp');
+var inter_pm110mp = require('./route/inter_pm110mp');
+var update_pm200 = require('./route/update_pm200');
+var insert_pm200 = require('./route/insert_pm200');
+
+app.use('/api/partner/update_pm110mp', update_pm110mp);
+app.use('/api/partner/inter_pm110mp', inter_pm110mp);
+app.use('/api/partner/update_pm200', update_pm200);
+app.use('/api/partner/insert_pm200', insert_pm200);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

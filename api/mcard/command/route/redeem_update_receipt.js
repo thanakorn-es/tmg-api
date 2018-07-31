@@ -24,15 +24,10 @@ router.get('/:DATE/:MTYPE/:MRCP', function(req,res){
       console.log(result.length);
       console.log(result);
 
-      if(result.length > 0){
         res.status(200);
         res.json(result);
         
-      }
-      else{
-        res.status(404);
-        res.end();
-      }
+
     })
     .catch(function(err){
 		res.status(500);

@@ -26,7 +26,14 @@ router.post('/', function(req, res){
     .then(function(result){
       console.log(result);
       console.log('get country');
-      rp.get(''+ config.endpoint.api_lookup.protocol +'://'+ config.endpoint.api_lookup.url +':'+ config.endpoint.api_lookup.port +'/api/lookup/country/' + req.body.CUST_COUNTRYCODE)
+	  var cntry = '';
+	  if(req.body.CUST_COUNTRYCODE==''){
+		  cntry = 'XX';
+	  }
+	  else{
+		  cntry = req.body.CUST_COUNTRYCODE;
+	  }
+      rp.get(''+ config.endpoint.api_lookup.protocol +'://'+ config.endpoint.api_lookup.url +':'+ config.endpoint.api_lookup.port +'/api/lookup/country/' + cntry)
         .then(function(country){
           console.log("country found", country);
 		  country = JSON.parse(country);
@@ -39,7 +46,9 @@ router.post('/', function(req, res){
 			  var cust_id = req.body.CUST_ID;
 			  console.log('Citizen : '+cust_id);
 		  }
-		  
+		rp.get(''+ config.endpoint.api_lookup.protocol +'://'+ config.endpoint.api_lookup.url +':'+ config.endpoint.api_lookup.port +'/api/lookup/partner/custid/' + cust_id)
+		.then(function(partner){
+		console.log("Found Partner", partner);
 		  rp.get(''+ config.endpoint.api_partner_inquiry.protocol +'://'+ config.endpoint.api_partner_inquiry.url +':'+ config.endpoint.api_partner_inquiry.port +'/api/inquiry_id/' + cust_id + '/' + req.body.PARTNER_ID)
 		  .then(function(partner_result){
 			  console.log("Found MCard", partner_result);
@@ -194,8 +203,8 @@ router.post('/', function(req, res){
 			  res.json({
 					"RESP_SYSCDE": "",
 					"RESP_DATETIME": date_str,							
-					"RESP_CDE": 301,
-					"RESP_MSG": "Not success/ Not found Partner ID/Partner NBR",
+					"RESP_CDE": 302,
+					"RESP_MSG": "Not success, not found MCard",
 					"MCARD_NUM": "",
 					"CARD_TYPE": 0,
 					"CARD_EXPIRY_DATE": "",
@@ -211,7 +220,32 @@ router.post('/', function(req, res){
 				});
 				return;
 		  });
+		})
+		.catch(function(err){
+			console.log(err);
+			console.log('No partner');
+			res.json({
+				"RESP_SYSCDE": "",
+				"RESP_DATETIME": date_str,							
+				"RESP_CDE": 301,
+				"RESP_MSG": "Not success/ Not found Partner ID/Partner NBR",
+				"MCARD_NUM": "",
+				"CARD_TYPE": 0,
+				"CARD_EXPIRY_DATE": "",
+				"CARD_POINT_BALANCE": "",
+				"CARD_POINT_EXPIRY": "",
+				"CARD_POINT_EXP_DATE": "",
+				"DEMO_TH_TITLE": "",
+				"DEMO_TH_NAME": "",
+				"DEMO_TH_SURNAME": "",
+				"DEMO_EN_TITLE": "",
+				"DEMO_EN_NAME": "",
+				"DEMO_EN_SURNAME": ""
+			});
+			return;
+        });
         })
+		
         .catch(function(err){
 			console.log(err);
 			console.log('No partner');
@@ -237,9 +271,13 @@ router.post('/', function(req, res){
         });
     })
     .catch(function(err){
-      console.log('failure');
-      res.status(500);
-      res.end();
+      console.log(err.statusCode);
+      res.status(200);
+      res.json({
+			"RESP_CDE": 402,
+			"RESP_MSG": "Invalid Format"
+		});
+		return;
     });
 });
 
