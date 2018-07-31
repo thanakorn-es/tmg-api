@@ -6,7 +6,7 @@
 				"duration": 600,
 				"arrivalRate": 100,
 				"rampTo": 500
-			}
+      }
 		]
 	},
 	"scenarios": [{
