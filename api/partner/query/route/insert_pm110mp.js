@@ -68,7 +68,6 @@ router.post('/:CTRY3', function (req, res) {
 	, req.body.PARTNER_NBR //PNNUM
 	, req.body.PARTNER_DETAILS //PNDETAIL
 	, req.body.CUST_ID //MBID
-
 	, req.body.DEMO_TH_TITLE //TH_TITLE
 	, req.body.DEMO_TH_NAME //TH_NAME
 	, req.body.DEMO_TH_SURNAME //TH_SURNAM

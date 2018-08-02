@@ -1,0 +1,750 @@
+Started phase 0, duration: 300s @ 22:00:14(-0400) 2018-07-31
+Report @ 22:00:24(-0400) 2018-07-31
+  Scenarios launched:  31
+  Scenarios completed: 31
+  Requests completed:  31
+  RPS sent: 3.32
+  Request latency:
+    min: 70.4
+    max: 128.8
+    median: 123.3
+    p95: 128.6
+    p99: 128.8
+  Codes:
+    404: 31
+
+Report @ 22:00:34(-0400) 2018-07-31
+  Scenarios launched:  124
+  Scenarios completed: 120
+  Requests completed:  120
+  RPS sent: 12.56
+  Request latency:
+    min: 69.6
+    max: 134.1
+    median: 122.9
+    p95: 129.2
+    p99: 133.3
+  Codes:
+    404: 120
+
+Report @ 22:00:44(-0400) 2018-07-31
+  Scenarios launched:  182
+  Scenarios completed: 183
+  Requests completed:  183
+  RPS sent: 18.4
+  Request latency:
+    min: 70.4
+    max: 359.2
+    median: 123.6
+    p95: 128.8
+    p99: 154.9
+  Codes:
+    404: 183
+
+Report @ 22:00:54(-0400) 2018-07-31
+  Scenarios launched:  227
+  Scenarios completed: 225
+  Requests completed:  225
+  RPS sent: 22.75
+  Request latency:
+    min: 69.5
+    max: 348.4
+    median: 123.4
+    p95: 132
+    p99: 207.1
+  Codes:
+    404: 225
+
+Report @ 22:01:04(-0400) 2018-07-31
+  Scenarios launched:  301
+  Scenarios completed: 304
+  Requests completed:  304
+  RPS sent: 30.1
+  Request latency:
+    min: 70.3
+    max: 187.4
+    median: 124.2
+    p95: 145.7
+    p99: 165.5
+  Codes:
+    404: 304
+
+Report @ 22:01:14(-0400) 2018-07-31
+  Scenarios launched:  372
+  Scenarios completed: 365
+  Requests completed:  365
+  RPS sent: 37.2
+  Request latency:
+    min: 69.8
+    max: 342.8
+    median: 125.2
+    p95: 163
+    p99: 187.9
+  Codes:
+    404: 365
+
+Report @ 22:01:24(-0400) 2018-07-31
+  Scenarios launched:  437
+  Scenarios completed: 437
+  Requests completed:  437
+  RPS sent: 43.74
+  Request latency:
+    min: 67.7
+    max: 351.3
+    median: 125.7
+    p95: 186.2
+    p99: 244.9
+  Codes:
+    404: 437
+
+Report @ 22:01:34(-0400) 2018-07-31
+  Scenarios launched:  500
+  Scenarios completed: 500
+  Requests completed:  500
+  RPS sent: 50
+  Request latency:
+    min: 69.8
+    max: 407.2
+    median: 143.2
+    p95: 227.6
+    p99: 268.6
+  Codes:
+    404: 500
+
+Report @ 22:01:44(-0400) 2018-07-31
+  Scenarios launched:  567
+  Scenarios completed: 535
+  Requests completed:  535
+  RPS sent: 56.76
+  Request latency:
+    min: 70.1
+    max: 856.8
+    median: 211.4
+    p95: 673.5
+    p99: 806.2
+  Codes:
+    404: 535
+
+Report @ 22:01:54(-0400) 2018-07-31
+  Scenarios launched:  616
+  Scenarios completed: 472
+  Requests completed:  472
+  RPS sent: 61.6
+  Request latency:
+    min: 584.7
+    max: 2781
+    median: 990.3
+    p95: 2660.4
+    p99: 2752.3
+  Codes:
+    404: 472
+
+Report @ 22:02:04(-0400) 2018-07-31
+  Scenarios launched:  681
+  Scenarios completed: 434
+  Requests completed:  434
+  RPS sent: 68.37
+  Request latency:
+    min: 2837.9
+    max: 15886.2
+    median: 4531.3
+    p95: 6216.3
+    p99: 6296.3
+  Codes:
+    404: 434
+
+Report @ 22:02:14(-0400) 2018-07-31
+  Scenarios launched:  746
+  Scenarios completed: 540
+  Requests completed:  540
+  RPS sent: 74.67
+  Request latency:
+    min: 6265.5
+    max: 8403.3
+    median: 7274.5
+    p95: 8292
+    p99: 8393.5
+  Codes:
+    404: 540
+
+Report @ 22:02:24(-0400) 2018-07-31
+  Scenarios launched:  789
+  Scenarios completed: 540
+  Requests completed:  540
+  RPS sent: 78.9
+  Request latency:
+    min: 8368.9
+    max: 11363.2
+    median: 9929.8
+    p95: 11206.6
+    p99: 11334.7
+  Codes:
+    404: 540
+
+Report @ 22:02:34(-0400) 2018-07-31
+  Scenarios launched:  859
+  Scenarios completed: 539
+  Requests completed:  539
+  RPS sent: 85.9
+  Request latency:
+    min: 11356
+    max: 14833.2
+    median: 12917.2
+    p95: 14357.4
+    p99: 14460.1
+  Codes:
+    404: 539
+
+Report @ 22:02:44(-0400) 2018-07-31
+  Scenarios launched:  936
+  Scenarios completed: 536
+  Requests completed:  536
+  RPS sent: 93.03
+  Request latency:
+    min: 14481.5
+    max: 17807.9
+    median: 16037.4
+    p95: 17613.6
+    p99: 17755.8
+  Codes:
+    404: 536
+
+Report @ 22:02:54(-0400) 2018-07-31
+  Scenarios launched:  994
+  Scenarios completed: 536
+  Requests completed:  536
+  RPS sent: 99.4
+  Request latency:
+    min: 17841.3
+    max: 21551
+    median: 19821.9
+    p95: 21447.6
+    p99: 21530.7
+  Codes:
+    404: 536
+
+Report @ 22:03:04(-0400) 2018-07-31
+  Scenarios launched:  1026
+  Scenarios completed: 517
+  Requests completed:  517
+  RPS sent: 102.4
+  Request latency:
+    min: 21553.3
+    max: 25750.7
+    median: 23703.8
+    p95: 25538.2
+    p99: 25712.7
+  Codes:
+    404: 517
+
+Report @ 22:03:14(-0400) 2018-07-31
+  Scenarios launched:  1121
+  Scenarios completed: 540
+  Requests completed:  540
+  RPS sent: 112.2
+  Request latency:
+    min: 25813.3
+    max: 30226
+    median: 27946.1
+    p95: 29934.6
+    p99: 30177.5
+  Codes:
+    404: 540
+
+Report @ 22:03:24(-0400) 2018-07-31
+  Scenarios launched:  1078
+  Scenarios completed: 539
+  Requests completed:  539
+  RPS sent: 107.8
+  Request latency:
+    min: 30256
+    max: 34954.6
+    median: 32683.3
+    p95: 34706.3
+    p99: 34898.9
+  Codes:
+    404: 539
+
+Report @ 22:03:34(-0400) 2018-07-31
+  Scenarios launched:  1208
+  Scenarios completed: 539
+  Requests completed:  539
+  RPS sent: 120.8
+  Request latency:
+    min: 34986
+    max: 39336.6
+    median: 37017.5
+    p95: 39122.2
+    p99: 39284.6
+  Codes:
+    404: 539
+
+Report @ 22:03:44(-0400) 2018-07-31
+  Scenarios launched:  1273
+  Scenarios completed: 535
+  Requests completed:  535
+  RPS sent: 127.3
+  Request latency:
+    min: 39356.3
+    max: 44124
+    median: 41703.8
+    p95: 43806.8
+    p99: 44076.3
+  Codes:
+    404: 535
+
+Report @ 22:03:54(-0400) 2018-07-31
+  Scenarios launched:  1269
+  Scenarios completed: 538
+  Requests completed:  538
+  RPS sent: 126.9
+  Request latency:
+    min: 44130.2
+    max: 53929.5
+    median: 46629.3
+    p95: 48624.2
+    p99: 48875.3
+  Codes:
+    404: 538
+
+Report @ 22:04:04(-0400) 2018-07-31
+  Scenarios launched:  1316
+  Scenarios completed: 541
+  Requests completed:  541
+  RPS sent: 131.6
+  Request latency:
+    min: 48907.4
+    max: 54016.8
+    median: 51518.4
+    p95: 53761.7
+    p99: 53966.8
+  Codes:
+    404: 541
+
+Report @ 22:04:14(-0400) 2018-07-31
+  Scenarios launched:  1389
+  Scenarios completed: 536
+  Requests completed:  536
+  RPS sent: 138.9
+  Request latency:
+    min: 54038.2
+    max: 59345.7
+    median: 56715.3
+    p95: 59148.2
+    p99: 59312.4
+  Codes:
+    404: 536
+
+Report @ 22:04:24(-0400) 2018-07-31
+  Scenarios launched:  1454
+  Scenarios completed: 538
+  Requests completed:  538
+  RPS sent: 145.3
+  Request latency:
+    min: 59305
+    max: 64212.1
+    median: 61814.8
+    p95: 63924.4
+    p99: 64152.9
+  Codes:
+    404: 538
+
+Report @ 22:04:34(-0400) 2018-07-31
+  Scenarios launched:  1494
+  Scenarios completed: 538
+  Requests completed:  538
+  RPS sent: 149.35
+  Request latency:
+    min: 64220.2
+    max: 69486.1
+    median: 66907.4
+    p95: 69202.4
+    p99: 69418.8
+  Codes:
+    404: 538
+
+Report @ 22:04:45(-0400) 2018-07-31
+  Scenarios launched:  1557
+  Scenarios completed: 537
+  Requests completed:  537
+  RPS sent: 155.44
+  Request latency:
+    min: 69516.4
+    max: 75035.9
+    median: 72118.2
+    p95: 74745.1
+    p99: 74987.4
+  Codes:
+    404: 537
+
+Report @ 22:04:55(-0400) 2018-07-31
+  Scenarios launched:  1634
+  Scenarios completed: 535
+  Requests completed:  535
+  RPS sent: 163.01
+  Request latency:
+    min: 75063.9
+    max: 80650.1
+    median: 77733.9
+    p95: 80401
+    p99: 80595.1
+  Codes:
+    404: 535
+
+Report @ 22:05:05(-0400) 2018-07-31
+  Scenarios launched:  1691
+  Scenarios completed: 535
+  Requests completed:  535
+  RPS sent: 168.76
+  Request latency:
+    min: 80705.1
+    max: 86154.9
+    median: 83359
+    p95: 85883.1
+    p99: 86088
+  Codes:
+    404: 535
+
+Report @ 22:05:15(-0400) 2018-07-31
+  Scenarios launched:  1696
+  Scenarios completed: 500
+  Requests completed:  500
+  RPS sent: 169.57
+  Request latency:
+    min: 86215.8
+    max: 91819
+    median: 88996.5
+    p95: 91517.7
+    p99: 91757.4
+  Codes:
+    404: 500
+
+Report @ 22:05:25(-0400) 2018-07-31
+  Scenarios launched:  1866
+  Scenarios completed: 566
+  Requests completed:  566
+  RPS sent: 186.8
+  Request latency:
+    min: 92196.8
+    max: 97820.6
+    median: 95048
+    p95: 97490.1
+    p99: 97777.3
+  Codes:
+    404: 566
+
+Report @ 22:05:35(-0400) 2018-07-31
+  Scenarios launched:  1785
+  Scenarios completed: 541
+  Requests completed:  541
+  RPS sent: 178.32
+  Request latency:
+    min: 97858.7
+    max: 103464.1
+    median: 100751.1
+    p95: 103252.3
+    p99: 103439.1
+  Codes:
+    404: 541
+
+Report @ 22:05:45(-0400) 2018-07-31
+  Scenarios launched:  1841
+  Scenarios completed: 547
+  Requests completed:  547
+  RPS sent: 184
+  Request latency:
+    min: 103495.9
+    max: 109489.5
+    median: 106466.6
+    p95: 109237.5
+    p99: 109421.5
+  Codes:
+    404: 547
+
+Report @ 22:05:55(-0400) 2018-07-31
+  Scenarios launched:  1836
+  Scenarios completed: 542
+  Requests completed:  542
+  RPS sent: 183.15
+  Request latency:
+    min: 109532.1
+    max: 115299.9
+    median: 112328.3
+    p95: 115024.7
+    p99: 115259.3
+  Codes:
+    404: 542
+
+Report @ 22:06:05(-0400) 2018-07-31
+  Scenarios launched:  1860
+  Scenarios completed: 433
+  Requests completed:  433
+  RPS sent: 186
+  Request latency:
+    min: 115356.2
+    max: 120145.5
+    median: 117812.7
+    p95: 119826.3
+    p99: 120004.6
+  Codes:
+    404: 433
+  Errors:
+    ETIMEDOUT: 285
+
+Report @ 22:06:15(-0400) 2018-07-31
+  Scenarios launched:  2083
+  Scenarios completed: 0
+  Requests completed:  0
+  RPS sent: 207.26
+  Request latency:
+    min: NaN
+    max: NaN
+    median: NaN
+    p95: NaN
+    p99: NaN
+  Errors:
+    ETIMEDOUT: 1393
+
+Report @ 22:06:25(-0400) 2018-07-31
+  Scenarios launched:  1948
+  Scenarios completed: 0
+  Requests completed:  0
+  RPS sent: 194.8
+  Request latency:
+    min: NaN
+    max: NaN
+    median: NaN
+    p95: NaN
+    p99: NaN
+  Errors:
+    ETIMEDOUT: 1452
+
+Report @ 22:06:35(-0400) 2018-07-31
+  Scenarios launched:  2171
+  Scenarios completed: 0
+  Requests completed:  0
+  RPS sent: 217
+  Request latency:
+    min: NaN
+    max: NaN
+    median: NaN
+    p95: NaN
+    p99: NaN
+  Errors:
+    ETIMEDOUT: 1501
+
+Report @ 22:06:45(-0400) 2018-07-31
+  Scenarios launched:  1986
+  Scenarios completed: 0
+  Requests completed:  0
+  RPS sent: 198.6
+  Request latency:
+    min: NaN
+    max: NaN
+    median: NaN
+    p95: NaN
+    p99: NaN
+  Errors:
+    ETIMEDOUT: 1558
+
+Report @ 22:06:55(-0400) 2018-07-31
+  Scenarios launched:  731
+  Scenarios completed: 0
+  Requests completed:  0
+  RPS sent: 73.2
+  Request latency:
+    min: NaN
+    max: NaN
+    median: NaN
+    p95: NaN
+    p99: NaN
+  Errors:
+    ETIMEDOUT: 1631
+
+Report @ 22:07:05(-0400) 2018-07-31
+  Scenarios launched:  0
+  Scenarios completed: 0
+  Requests completed:  0
+  RPS sent: NaN
+  Request latency:
+    min: NaN
+    max: NaN
+    median: NaN
+    p95: NaN
+    p99: NaN
+  Errors:
+    ETIMEDOUT: 1683
+
+Report @ 22:07:15(-0400) 2018-07-31
+  Scenarios launched:  0
+  Scenarios completed: 0
+  Requests completed:  0
+  RPS sent: NaN
+  Request latency:
+    min: NaN
+    max: NaN
+    median: NaN
+    p95: NaN
+    p99: NaN
+  Errors:
+    ETIMEDOUT: 1689
+
+Report @ 22:07:25(-0400) 2018-07-31
+  Scenarios launched:  0
+  Scenarios completed: 0
+  Requests completed:  0
+  RPS sent: NaN
+  Request latency:
+    min: NaN
+    max: NaN
+    median: NaN
+    p95: NaN
+    p99: NaN
+  Errors:
+    ETIMEDOUT: 1871
+
+Report @ 22:07:35(-0400) 2018-07-31
+  Scenarios launched:  0
+  Scenarios completed: 0
+  Requests completed:  0
+  RPS sent: NaN
+  Request latency:
+    min: NaN
+    max: NaN
+    median: NaN
+    p95: NaN
+    p99: NaN
+  Errors:
+    ETIMEDOUT: 1786
+
+Report @ 22:07:45(-0400) 2018-07-31
+  Scenarios launched:  0
+  Scenarios completed: 0
+  Requests completed:  0
+  RPS sent: NaN
+  Request latency:
+    min: NaN
+    max: NaN
+    median: NaN
+    p95: NaN
+    p99: NaN
+  Errors:
+    ETIMEDOUT: 1828
+
+Report @ 22:07:55(-0400) 2018-07-31
+  Scenarios launched:  0
+  Scenarios completed: 0
+  Requests completed:  0
+  RPS sent: NaN
+  Request latency:
+    min: NaN
+    max: NaN
+    median: NaN
+    p95: NaN
+    p99: NaN
+  Errors:
+    ETIMEDOUT: 1841
+
+Report @ 22:08:05(-0400) 2018-07-31
+  Scenarios launched:  0
+  Scenarios completed: 0
+  Requests completed:  0
+  RPS sent: NaN
+  Request latency:
+    min: NaN
+    max: NaN
+    median: NaN
+    p95: NaN
+    p99: NaN
+  Errors:
+    ETIMEDOUT: 1859
+
+Report @ 22:08:15(-0400) 2018-07-31
+  Scenarios launched:  0
+  Scenarios completed: 0
+  Requests completed:  0
+  RPS sent: NaN
+  Request latency:
+    min: NaN
+    max: NaN
+    median: NaN
+    p95: NaN
+    p99: NaN
+  Errors:
+    ETIMEDOUT: 2071
+
+Report @ 22:08:25(-0400) 2018-07-31
+  Scenarios launched:  0
+  Scenarios completed: 0
+  Requests completed:  0
+  RPS sent: NaN
+  Request latency:
+    min: NaN
+    max: NaN
+    median: NaN
+    p95: NaN
+    p99: NaN
+  Errors:
+    ETIMEDOUT: 1948
+
+Report @ 22:08:35(-0400) 2018-07-31
+  Scenarios launched:  0
+  Scenarios completed: 0
+  Requests completed:  0
+  RPS sent: NaN
+  Request latency:
+    min: NaN
+    max: NaN
+    median: NaN
+    p95: NaN
+    p99: NaN
+  Errors:
+    ETIMEDOUT: 2170
+
+Report @ 22:08:45(-0400) 2018-07-31
+  Scenarios launched:  0
+  Scenarios completed: 0
+  Requests completed:  0
+  RPS sent: NaN
+  Request latency:
+    min: NaN
+    max: NaN
+    median: NaN
+    p95: NaN
+    p99: NaN
+  Errors:
+    ETIMEDOUT: 1987
+
+Report @ 22:08:49(-0400) 2018-07-31
+  Scenarios launched:  0
+  Scenarios completed: 0
+  Requests completed:  0
+  RPS sent: NaN
+  Request latency:
+    min: NaN
+    max: NaN
+    median: NaN
+    p95: NaN
+    p99: NaN
+  Errors:
+    ETIMEDOUT: 728
+
+All virtual users finished
+Summary report @ 22:08:49(-0400) 2018-07-31
+  Scenarios launched:  45675
+  Scenarios completed: 16394
+  Requests completed:  16394
+  RPS sent: 88.88
+  Request latency:
+    min: 67.7
+    max: 120145.5
+    median: 37280.1
+    p95: 111296.6
+    p99: 118753.9
+  Scenario counts:
+    Inquiry MPoint: 45675 (100%)
+  Codes:
+    404: 16394
+  Errors:
+    ETIMEDOUT: 29281
+

@@ -1,0 +1,27 @@
+{
+	"config":{
+    "target": "https://49.231.171.163",
+		"phases": [
+			{
+				"duration": 300,
+				"arrivalRate": 1,
+				"rampTo": 300
+			}
+		]
+	},
+	"scenarios": [{
+		"name": "Inquiry MPoint by ID",
+    	"flow": [{
+			"post": {
+          "url": "/scb/sb/inquiry_mpoint_byid",
+          "headers": {
+					  "content-type": "application/json",
+					  "X-ibm-Client-id": "d2014527-2f56-43a5-a718-8bc20a4ced8c",
+	    			"X-ibm-Client-secret": "Y1nM7pN5aK1xH1xP5bP4dQ1rO1hU2nI2fV3sA1bN0cF2dR2uY7"
+				  },
+          "body": "{'PARTNER_ID':'10200','CUST_ID':'3001598793505','CUST_COUNTRYCODE': '','SELRANGEDT':{'START': 0,'LIMIT': 1},}"
+			}
+		}]
+	}]
+}
+

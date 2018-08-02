@@ -1,0 +1,13 @@
+{
+  "name": "tmg-api-stress",
+  "version": "0.1.0",
+  "description": "Performance Benchmark",
+  "author": "Thanakorn Piroonsith <thanapir@metrosystems.co.th>",
+  "main": "inder.js",
+  "scripts": {
+    "test-inquiry-partner": "artillery run inquiry.partner.1.json"
+  },
+  "dependencies": {
+    "express": "^4.16.1",
+  }
+}
