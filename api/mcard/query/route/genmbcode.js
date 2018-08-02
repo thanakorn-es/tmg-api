@@ -22,7 +22,6 @@ router.get('/', function (req, res) {
 		
 		
 		if (stmt_result.length <= 0) {
-			console.('1');
 			mb = '710570000000102';
 			console.log(mb);
 		} else {

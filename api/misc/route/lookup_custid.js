@@ -19,10 +19,8 @@ router.get('/:CUSTID', function (req, res) {
 	.then(function (result) {
 		console.log(result.length);
 		console.log(result);
-		res.status(200);
-		res.json({});
 		// MCRTA7P.MBID  must not exist
-		/*if(result.length = 0){
+		if(result.length > 0){
 		res.status(200);
 		res.json({});
 
@@ -30,7 +28,7 @@ router.get('/:CUSTID', function (req, res) {
 		else{
 		res.status(404);
 		res.end();
-		}*/
+		}
 	})
 	.catch (function (err) {
 		console.log(err);

@@ -28,15 +28,26 @@ var config = require('../../../../config/')
 		var mb_type = '';
 
 		console.log('Validate Schema');
+		if (req.body.DEMO_NTNL == 'TH') {
+			if (checkID(req.body.CUST_ID)) {
+				citizen = req.body.CUST_ID;
+			} else {
+				res.json({
+					"RESP_CDE": 402,
+					"RESP_MSG": "Invalid format"
+				});
+				return;
+			}
+		}
 		rp(options)
 		.then(function (result) {
 			console.log('Validate Success');
 			console.log(result);
 			console.log('Check MCARD_FLAG');
 			//******************** Case MCARD_FLAG: NO_UPDATE ********************//
-			//if (req.body.MCARD_FLAG == 'NO_UPDATE') {
+			if (req.body.MCARD_FLAG == 'NO_UPDATE') {
 
-			if (typeof req.body.MCARD_FLAG != 'undefined') {
+				//if (typeof req.body.MCARD_FLAG != 'undefined') {
 				console.log('MCARD_FLAG: NO_UPDATE');
 				console.log('Lookup country');
 				rp.get('' + config.endpoint.api_lookup.protocol + '://' + config.endpoint.api_lookup.url + ':' + config.endpoint.api_lookup.port + '/api/lookup/country/' + req.body.DEMO_NTNL)
@@ -67,8 +78,8 @@ var config = require('../../../../config/')
 								rp.get('' + config.endpoint.api_mcard_inquiry.protocol + '://' + config.endpoint.api_mcard_inquiry.url + ':' + config.endpoint.api_mcard_inquiry.port + '/api/genmbcode')
 								.then(function (result) {
 									result = JSON.parse(result);
-									console.log('Running number : ' + result[0].MBCODE_R);
-									mb = result[0].MBCODE_R;
+									console.log('Running number : ' + result.MBCODE_R);
+									mb = result.MBCODE_R;
 									var options = {
 										method: 'POST',
 										uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_mvm01p/' + mb,
@@ -272,8 +283,8 @@ var config = require('../../../../config/')
 							.then(function (result) {
 								console.log('Lookup MVM01P : Existing Card');
 								result_mb = JSON.parse(result);
-								mb = result_mb[0].MBCODE;
-								mb_type = result_mb[0].MBMEMC;
+								mb = result_mb.MBCODE;
+								mb_type = result_mb.MBMEMC;
 								console.log('Lookup PM200MP');
 								rp.get('' + config.endpoint.api_lookup.protocol + '://' + config.endpoint.api_lookup.url + ':' + config.endpoint.api_lookup.port + '/api/lookup/pm200/' + req.body.PARTNER_NBR)
 								.then(function (result) {
@@ -401,8 +412,8 @@ var config = require('../../../../config/')
 								rp.get('' + config.endpoint.api_mcard_inquiry.protocol + '://' + config.endpoint.api_mcard_inquiry.url + ':' + config.endpoint.api_mcard_inquiry.port + '/api/genmbcode')
 								.then(function (result) {
 									result = JSON.parse(result);
-									console.log('Running number : ' + result[0].MBCODE_R);
-									mb = result[0].MBCODE_R;
+									console.log('Running number : ' + result.MBCODE_R);
+									mb = result.MBCODE_R;
 									var options = {
 										method: 'POST',
 										uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_mvm01p/' + mb,
@@ -847,15 +858,17 @@ var config = require('../../../../config/')
 							.catch (function (err) {
 								console.log('Lookup MVM01P : Not Exist');
 								console.log('Insert MCRTA7P');
-								rp.get('' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_custid/' + custid + '/' + req.body.DEMO_TH_NAME + '/' + req.body.DEMO_TH_SURNAME)
+								var uri_get = encodeURI('' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_custid/' + custid + '/' + req.body.DEMO_TH_NAME + '/' + req.body.DEMO_TH_SURNAME);
+								//rp.get('' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_custid/' + custid + '/' + req.body.DEMO_TH_NAME + '/' + req.body.DEMO_TH_SURNAME)
+								rp.get(uri_get)
 								.then(function (result) {
 									console.log('Insert MCRTA7P : success');
 									console.log('Get running number');
 									rp.get('' + config.endpoint.api_mcard_inquiry.protocol + '://' + config.endpoint.api_mcard_inquiry.url + ':' + config.endpoint.api_mcard_inquiry.port + '/api/genmbcode')
 									.then(function (result) {
 										result = JSON.parse(result);
-										console.log('Running number : ' + result[0].MBCODE_R);
-										mb = result[0].MBCODE_R;
+										console.log('Running number : ' + result.MBCODE_R);
+										mb = result.MBCODE_R;
 										var options = {
 											method: 'POST',
 											uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_mvm01p/' + mb,
@@ -1087,6 +1100,7 @@ var config = require('../../../../config/')
 									});
 								})
 								.catch (function (err) {
+									console.log(err);
 									console.log('Insert MCRTA7P : Fail');
 									res.status(500);
 									res.end();
@@ -1237,8 +1251,8 @@ var config = require('../../../../config/')
 								rp.get('' + config.endpoint.api_mcard_inquiry.protocol + '://' + config.endpoint.api_mcard_inquiry.url + ':' + config.endpoint.api_mcard_inquiry.port + '/api/genmbcode')
 								.then(function (result) {
 									result = JSON.parse(result);
-									console.log('Running number : ' + result[0].MBCODE_R);
-									mb = result[0].MBCODE_R;
+									console.log('Running number : ' + result.MBCODE_R);
+									mb = result.MBCODE_R;
 									var options = {
 										method: 'POST',
 										uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_mvm01p/' + mb,
@@ -1524,8 +1538,8 @@ var config = require('../../../../config/')
 								rp.get('' + config.endpoint.api_mcard_inquiry.protocol + '://' + config.endpoint.api_mcard_inquiry.url + ':' + config.endpoint.api_mcard_inquiry.port + '/api/genmbcode')
 								.then(function (result) {
 									result = JSON.parse(result);
-									console.log('Running number : ' + result[0].MBCODE_R);
-									mb = result[0].MBCODE_R;
+									console.log('Running number : ' + result.MBCODE_R);
+									mb = result.MBCODE_R;
 									var options = {
 										method: 'POST',
 										uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_mvm01p/' + mb,
@@ -1688,7 +1702,26 @@ var config = require('../../../../config/')
 			});
 			return;
 		});
+
+		function checkID(custid) {
+			var ssn_ = custid;
+			var sum = 0;
+			console.log(ssn_);
+			if (ssn_.length != 13) {
+				console.log("Invalid Citizen ID - Length");
+				return false;
+			} else {
+				for (i = 0, sum = 0; i < 12; i++)
+					sum += parseFloat(ssn_.charAt(i)) * (13 - i);
+				if ((11 - sum % 11) % 10 != parseFloat(ssn_.charAt(12))) {
+					console.log("Invalid Citizen ID - Format");
+					return false;
+				} else {
+					console.log("Valid Citizen ID");
+					return true;
+				}
+			}
+		}
 	});
-	
 
 module.exports = router;
