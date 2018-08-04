@@ -14,8 +14,12 @@ const pool = require('node-jt400').pool(config_400);
 
 router.get('/:CUST_ID', function (req, res) {
 
+	var date_str = '';
+	var today = new Date();
+	date_str = today.getFullYear().toString() + ((today.getMonth() + 1) < 10 ? '0' : '').toString() + (today.getMonth() + 1).toString();
+
 	console.log(req.params.CUST_ID);
-	var stmt = "select * from MBRFLIB/MVM01P MVM01P where MVM01P.MBID = '" + req.params.CUST_ID + "'";
+	var stmt = "select * from (select ROW_NUMBER() OVER (ORDER BY  MVM01P.MBCODE) AS ROWNUM,MVM01P.* from MBRFLIB/MVM01P MVM01P where MVM01P.MBID = '" + req.params.CUST_ID + "' and MVM01P.MBMEMC != 'AT' and MVM01P.MBEXP > " + date_str + " and MVM01P.MBCODE not in (select MBCODE from MBRFLIB/MCRTA28P) and MVM01P.MBDAT = (SELECT MAX(MBDAT) FROM MBRFLIB/MVM01P P2 WHERE MVM01P.MBID = P2.MBID)) as tbl WHERE tbl.ROWNUM BETWEEN 1 AND 1";
 	pool.query(stmt)
 	.then(function (result) {
 		console.log(result.length);

@@ -11,7 +11,7 @@ const config_400 = {
 	//password: 'qsecofr'
 };
 const pool = require('node-jt400').pool(config_400);
-router.post('/:MBCODE', function (req, res) {
+router.post('/:MBCODE/:MBNAT/:CTRY3', function (req, res) {
 
 	var village = '';
 	var floor = '';
@@ -20,20 +20,20 @@ router.post('/:MBCODE', function (req, res) {
 	var citizen = '';
 	var passport = '';
 
-	if (typeof req.body.village != 'undefined') {
-		village = req.body.village;
+	if (typeof req.body.ADD_VILLAGE != 'undefined') {
+		village = req.body.ADD_VILLAGE;
 	}
 
-	if (typeof req.body.floor != 'undefined') {
-		floor = req.body.floor;
+	if (typeof req.body.ADD_FLOOR != 'undefined') {
+		floor = req.body.ADD_FLOOR;
 	}
 
-	if (typeof req.body.soi != 'undefined') {
-		soi = req.body.soi;
+	if (typeof req.body.ADD_SOI != 'undefined') {
+		soi = req.body.ADD_SOI;
 	}
 
-	if (typeof req.body.contacthome != 'undefined') {
-		contacthome = req.body.contacthome;
+	if (typeof req.body.CONTACT_HOME != 'undefined') {
+		contacthome = req.body.CONTACT_HOME;
 	}
 
 	if (req.body.DEMO_NTNL == 'TH') {
@@ -46,9 +46,13 @@ router.post('/:MBCODE', function (req, res) {
 			});
 			return;
 		}
-	} 
+	}
 	else {
 		passport = req.body.CUST_ID;
+	}
+	
+	if(req.body.DEMO_NTNL != 'TH'){
+		citizen = req.params.CTRY3 + req.body.CUST_ID;
 	}
 	
 	var date_str = '';
@@ -77,7 +81,7 @@ router.post('/:MBCODE', function (req, res) {
 	, req.body.DEMO_DOB //MBBIRH
 	, age //MBAGE
 	, passport //MBPASS
-	, req.body.DEMO_NTNL //MBNAT
+	, req.params.MBNAT //MBNAT
 	, req.body.DEMO_MRTLSTS //MBHSTS
 	, req.body.DEMO_GENDER //MBSEX
 	, req.body.DEMO_HAVE_KIDS //MBCHIL

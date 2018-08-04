@@ -25,7 +25,9 @@ var config = require('../../../../config/')
 		var custid = '';
 		var mb = '';
 		var ctry = '';
-		var mb_type = '';
+		var mb_type = 'MC';
+		var mbnat_ = '';
+		var nlnt_ = '';
 
 		console.log('Validate Schema');
 		if (req.body.DEMO_NTNL == 'TH') {
@@ -38,6 +40,13 @@ var config = require('../../../../config/')
 				});
 				return;
 			}
+		}
+		else if (!req.body.DEMO_NTNL) {
+			res.json({
+					"RESP_CDE": 402,
+					"RESP_MSG": "Invalid format"
+				});
+				return;
 		}
 		rp(options)
 		.then(function (result) {
@@ -57,6 +66,7 @@ var config = require('../../../../config/')
 					result = JSON.parse(result);
 					console.log(result);
 					ctry = result[0].CNTRYCD3;
+					mbnat_ = result[0].MBNAT;
 					if (req.body.DEMO_NTNL == 'TH') {
 						custid = req.body.CUST_ID
 					} else {
@@ -67,11 +77,13 @@ var config = require('../../../../config/')
 					.then(function (result) {
 						console.log('Lookup MCRTA7P (Must not exist) : success');
 						console.log('Lookup MVM01P');
-						rp.get('' + config.endpoint.api_lookup.protocol + '://' + config.endpoint.api_lookup.url + ':' + config.endpoint.api_lookup.port + '/api/lookup/lookup_mvm01p/' + custid)
+						rp.get('' + config.endpoint.api_lookup.protocol + '://' + config.endpoint.api_lookup.url + ':' + config.endpoint.api_lookup.port + '/api/lookup/mvm01p/' + custid)
 						.then(function (result) {
 							console.log('Lookup MVM01P : success');
 							console.log('Insert MCRTA7P');
-							rp.get('' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_custid/' + custid + '/' + req.body.DEMO_TH_NAME + '/' + req.body.DEMO_TH_SURNAME)
+							var uri_get = encodeURI('' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_custid/' + custid + '/' + req.body.DEMO_TH_NAME + '/' + req.body.DEMO_TH_SURNAME);
+							//rp.get('' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_custid/' + custid + '/' + req.body.DEMO_TH_NAME + '/' + req.body.DEMO_TH_SURNAME)
+							rp.get(uri_get)
 							.then(function (result) {
 								console.log('Insert MCRTA7P : success');
 								console.log('Get running number');
@@ -82,7 +94,7 @@ var config = require('../../../../config/')
 									mb = result.MBCODE_R;
 									var options = {
 										method: 'POST',
-										uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_mvm01p/' + mb,
+										uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_mvm01p/' + mb + '/' + mbnat_ +'/' + ctry,
 										body: req.body,
 										json: true // Automatically stringifies the body to JSON
 									};
@@ -103,7 +115,7 @@ var config = require('../../../../config/')
 											console.log('Insert PM110MP');
 											var options = {
 												method: 'POST',
-												uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm110mp/' + ctry,
+												uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm110mp/' + ctry + '/' + mb_type +'/' + ctry,
 												body: req.body,
 												json: true // Automatically stringifies the body to JSON
 											};
@@ -268,6 +280,8 @@ var config = require('../../../../config/')
 						result = JSON.parse(result);
 						console.log(result);
 						ctry = result[0].CNTRYCD3;
+						mbnat_ = result[0].MBNAT;
+						console.log(ctry);
 						if (req.body.DEMO_NTNL == 'TH') {
 							custid = req.body.CUST_ID
 						} else {
@@ -279,12 +293,13 @@ var config = require('../../../../config/')
 							//******************** Existing Customer ********************//
 							console.log('Lookup MCRTA7P : Existing Customer');
 							console.log('Lookup MVM01P');
-							rp.get('' + config.endpoint.api_lookup.protocol + '://' + config.endpoint.api_lookup.url + ':' + config.endpoint.api_lookup.port + '/api/lookup/lookup_mvm01p/' + custid)
+							rp.get('' + config.endpoint.api_lookup.protocol + '://' + config.endpoint.api_lookup.url + ':' + config.endpoint.api_lookup.port + '/api/lookup/mvm01p/' + custid)
 							.then(function (result) {
 								console.log('Lookup MVM01P : Existing Card');
 								result_mb = JSON.parse(result);
-								mb = result_mb.MBCODE;
-								mb_type = result_mb.MBMEMC;
+								mb = result_mb[0].MBCODE;
+								console.log("MBCODE : " + mb);
+								mb_type = result_mb[0].MBMEMC;
 								console.log('Lookup PM200MP');
 								rp.get('' + config.endpoint.api_lookup.protocol + '://' + config.endpoint.api_lookup.url + ':' + config.endpoint.api_lookup.port + '/api/lookup/pm200/' + req.body.PARTNER_NBR)
 								.then(function (result) {
@@ -308,7 +323,7 @@ var config = require('../../../../config/')
 									console.log('Update PM110MP');
 									var options = {
 										method: 'POST',
-										uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/update_pm110mp/' + ctry,
+										uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/update_pm110mp/' + ctry + '/' + mb_type +'/' + ctry,
 										body: req.body,
 										json: true // Automatically stringifies the body to JSON
 									};
@@ -416,7 +431,7 @@ var config = require('../../../../config/')
 									mb = result.MBCODE_R;
 									var options = {
 										method: 'POST',
-										uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_mvm01p/' + mb,
+										uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_mvm01p/' + mb + '/' + mbnat_ +'/' + ctry,
 										body: req.body,
 										json: true // Automatically stringifies the body to JSON
 									};
@@ -437,7 +452,7 @@ var config = require('../../../../config/')
 											console.log('Update PM110MP');
 											var options = {
 												method: 'POST',
-												uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/update_pm110mp/' + ctry,
+												uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/update_pm110mp/' + ctry + '/' + mb_type +'/' + ctry,
 												body: req.body,
 												json: true // Automatically stringifies the body to JSON
 											};
@@ -650,20 +665,23 @@ var config = require('../../../../config/')
 							console.log('Lookup MCRTA7P : Not exist');
 							//******************** No Existing Customer ********************//
 							console.log('Lookup MVM01P');
-							rp.get('' + config.endpoint.api_lookup.protocol + '://' + config.endpoint.api_lookup.url + ':' + config.endpoint.api_lookup.port + '/api/lookup/lookup_mvm01p/' + custid)
+							rp.get('' + config.endpoint.api_lookup.protocol + '://' + config.endpoint.api_lookup.url + ':' + config.endpoint.api_lookup.port + '/api/lookup/mvm01p/' + custid)
 							.then(function (result) {
 								console.log('Lookup MVM01P : Exist');
 								result_mb = JSON.parse(result);
 								mb = result_mb[0].MBCODE;
+								console.log("MBCODE : " + mb);
 								mb_type = result_mb[0].MBMEMC;
 								console.log('Insert MCRTA7P');
-								rp.get('' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_custid/' + custid + '/' + req.body.DEMO_TH_NAME + '/' + req.body.DEMO_TH_SURNAME)
+								var uri_get = encodeURI('' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_custid/' + custid + '/' + req.body.DEMO_TH_NAME + '/' + req.body.DEMO_TH_SURNAME);
+								//rp.get('' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_custid/' + custid + '/' + req.body.DEMO_TH_NAME + '/' + req.body.DEMO_TH_SURNAME)
+								rp.get(uri_get)
 								.then(function (result) {
 									console.log('Insert MCRTA7P : success');
 									console.log('Update PM110MP');
 									var options = {
 										method: 'POST',
-										uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/update_pm110mp/' + ctry,
+										uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/update_pm110mp/' + ctry + '/' + mb_type +'/' + ctry,
 										body: req.body,
 										json: true // Automatically stringifies the body to JSON
 									};
@@ -871,7 +889,7 @@ var config = require('../../../../config/')
 										mb = result.MBCODE_R;
 										var options = {
 											method: 'POST',
-											uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_mvm01p/' + mb,
+											uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_mvm01p/' + mb + '/' + mbnat_ +'/' + ctry,
 											body: req.body,
 											json: true // Automatically stringifies the body to JSON
 										};
@@ -892,7 +910,7 @@ var config = require('../../../../config/')
 												console.log('Update PM110MP');
 												var options = {
 													method: 'POST',
-													uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/update_pm110mp/' + ctry,
+													uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/update_pm110mp/' + ctry + '/' + mb_type +'/' + ctry,
 													body: req.body,
 													json: true // Automatically stringifies the body to JSON
 												};
@@ -931,7 +949,7 @@ var config = require('../../../../config/')
 																		"RESP_CDE": 301,
 																		"RESP_MSG": " Already have Partner NBR",
 																		"MCARD_NUM": mb,
-																		"CARD_TYPE": mb_type,
+																		"CARD_TYPE": "MC",
 																		"CARD_EXPIRY_DATE": "999912",
 																		"CARD_POINT_BALANCE": 0,
 																		"CARD_POINT_EXPIRY": "999912",
@@ -962,7 +980,7 @@ var config = require('../../../../config/')
 																		"RESP_CDE": 301,
 																		"RESP_MSG": " Already have Partner NBR",
 																		"MCARD_NUM": mb,
-																		"CARD_TYPE": mb_type,
+																		"CARD_TYPE": "MC",
 																		"CARD_EXPIRY_DATE": "999912",
 																		"CARD_POINT_BALANCE": 0,
 																		"CARD_POINT_EXPIRY": "999912",
@@ -1015,7 +1033,7 @@ var config = require('../../../../config/')
 																		"RESP_CDE": 301,
 																		"RESP_MSG": " Already have Partner NBR",
 																		"MCARD_NUM": mb,
-																		"CARD_TYPE": mb_type,
+																		"CARD_TYPE": "MC",
 																		"CARD_EXPIRY_DATE": "999912",
 																		"CARD_POINT_BALANCE": 0,
 																		"CARD_POINT_EXPIRY": "999912",
@@ -1046,7 +1064,7 @@ var config = require('../../../../config/')
 																		"RESP_CDE": 301,
 																		"RESP_MSG": " Already have Partner NBR",
 																		"MCARD_NUM": mb,
-																		"CARD_TYPE": mb_type,
+																		"CARD_TYPE": "MC",
 																		"CARD_EXPIRY_DATE": "999912",
 																		"CARD_POINT_BALANCE": 0,
 																		"CARD_POINT_EXPIRY": "999912",
@@ -1128,6 +1146,7 @@ var config = require('../../../../config/')
 						result = JSON.parse(result);
 						console.log(result);
 						ctry = result[0].CNTRYCD3;
+						mbnat_ = result[0].MBNAT;
 						if (req.body.DEMO_NTNL == 'TH') {
 							custid = req.body.CUST_ID
 						} else {
@@ -1139,16 +1158,18 @@ var config = require('../../../../config/')
 						.then(function (result) {
 							console.log('Lookup MCRTA7P : Existing Customer');
 							console.log('Lookup MVM01P');
-							rp.get('' + config.endpoint.api_lookup.protocol + '://' + config.endpoint.api_lookup.url + ':' + config.endpoint.api_lookup.port + '/api/lookup/lookup_mvm01p/' + custid)
+							rp.get('' + config.endpoint.api_lookup.protocol + '://' + config.endpoint.api_lookup.url + ':' + config.endpoint.api_lookup.port + '/api/lookup/mvm01p/' + custid)
 							.then(function (result) {
 								console.log('Lookup MVM01P : Exist');
 								result_mb = JSON.parse(result);
-								mb = result_mb.MBCODE;
-								mb_type = result_mb.MBMEMC;
+								//console.log(result_mb);
+								mb = result_mb[0].MBCODE;
+								console.log("MBCODE : " + mb);
+								mb_type = result_mb[0].MBMEMC;
 								console.log('Insert PM110MP');
 								var options = {
 									method: 'POST',
-									uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm110mp/' + ctry,
+									uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm110mp/' + ctry + '/' + mb_type +'/' + ctry,
 									body: req.body,
 									json: true // Automatically stringifies the body to JSON
 								};
@@ -1188,7 +1209,7 @@ var config = require('../../../../config/')
 													"CARD_POINT_BALANCE": 0,
 													"CARD_POINT_EXPIRY": "999912",
 													"CARD_POINT_EXP_DATE": "999912"
-													});
+												});
 												return;
 											})
 											.catch (function (err) {
@@ -1255,7 +1276,7 @@ var config = require('../../../../config/')
 									mb = result.MBCODE_R;
 									var options = {
 										method: 'POST',
-										uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_mvm01p/' + mb,
+										uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_mvm01p/' + mb + '/' + mbnat_ +'/' + ctry,
 										body: req.body,
 										json: true // Automatically stringifies the body to JSON
 									};
@@ -1276,7 +1297,7 @@ var config = require('../../../../config/')
 											console.log('Insert PM110MP');
 											var options = {
 												method: 'POST',
-												uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm110mp/' + ctry,
+												uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm110mp/' + ctry + '/' + mb_type +'/' + ctry,
 												body: req.body,
 												json: true // Automatically stringifies the body to JSON
 											};
@@ -1398,134 +1419,121 @@ var config = require('../../../../config/')
 						.catch (function (err) {
 							console.log('Lookup MCRTA7P : Not Exist');
 							console.log('Lookup MVM01P');
-							rp.get('' + config.endpoint.api_lookup.protocol + '://' + config.endpoint.api_lookup.url + ':' + config.endpoint.api_lookup.port + '/api/lookup/lookup_mvm01p/' + custid)
+							rp.get('' + config.endpoint.api_lookup.protocol + '://' + config.endpoint.api_lookup.url + ':' + config.endpoint.api_lookup.port + '/api/lookup/mvm01p/' + custid)
 							.then(function (result) {
 								console.log('Lookup MVM01P : Exist');
 								result_mb = JSON.parse(result);
 								mb = result_mb[0].MBCODE;
+								console.log("MBCODE : " + mb);
 								mb_type = result_mb[0].MBMEMC;
-								console.log('Insert MVM01P');
-								rp(options)
+								console.log('Insert MCRTA7P');
+								var uri_get = encodeURI('' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_custid/' + custid + '/' + req.body.DEMO_TH_NAME + '/' + req.body.DEMO_TH_SURNAME);
+								//rp.get('' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_custid/' + custid + '/' + req.body.DEMO_TH_NAME + '/' + req.body.DEMO_TH_SURNAME)
+								rp.get(uri_get)
 								.then(function (result) {
-									console.log('Insert MVM01P : success');
-									console.log('Insert MVM02P');
+									console.log('Insert MCRTA7P : success');
+									console.log('Insert PM110MP');
 									var options = {
 										method: 'POST',
-										uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_mvm02p/' + mb,
+										uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm110mp/' + ctry + '/' + mb_type +'/' + ctry,
 										body: req.body,
 										json: true // Automatically stringifies the body to JSON
 									};
 									rp(options)
 									.then(function (result) {
-										console.log('Insert MVM02P : success');
-										console.log('Insert PM110MP');
+										console.log('Insert PM110MP : success');
+										console.log('Insert PM200MP');
 										var options = {
 											method: 'POST',
-											uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm110mp/' + ctry,
+											uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm200/' + mb,
 											body: req.body,
 											json: true // Automatically stringifies the body to JSON
 										};
 										rp(options)
 										.then(function (result) {
-											console.log('Insert PM110MP : success');
-											console.log('Insert PM200MP');
-											var options = {
-												method: 'POST',
-												uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm200/' + mb,
-												body: req.body,
-												json: true // Automatically stringifies the body to JSON
-											};
-											rp(options)
+											console.log('Insert PM200MP : success');
+											console.log('Lookup MPOTF1P');
+											rp.get('' + config.endpoint.api_lookup.protocol + '://' + config.endpoint.api_lookup.url + ':' + config.endpoint.api_lookup.port + '/api/lookup/lookup_mpotf1p/' + mb)
 											.then(function (result) {
-												console.log('Insert PM200MP : success');
-												console.log('Lookup MPOTF1P');
-												rp.get('' + config.endpoint.api_lookup.protocol + '://' + config.endpoint.api_lookup.url + ':' + config.endpoint.api_lookup.port + '/api/lookup/lookup_mpotf1p/' + mb)
+												console.log('Update MPOTF1P');
+												var options = {
+													method: 'POST',
+													uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/update_mpotf1p/' + mb,
+													body: req.body,
+													json: true // Automatically stringifies the body to JSON
+												};
+												rp(options)
 												.then(function (result) {
-													console.log('Update MPOTF1P');
-													var options = {
-														method: 'POST',
-														uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/update_mpotf1p/' + mb,
-														body: req.body,
-														json: true // Automatically stringifies the body to JSON
-													};
-													rp(options)
-													.then(function (result) {
-														res.json({
-															"RESP_SYSCDE": "",
-															"RESP_DATETIME": date_str,
-															"RESP_CDE": 102,
-															"RESP_MSG": "Success, found many MCard (already have cust_id)",
-															"MCARD_NUM": mb,
-															"CARD_TYPE": mb_type,
-															"CARD_EXPIRY_DATE": "999912",
-															"CARD_POINT_BALANCE": 0,
-															"CARD_POINT_EXPIRY": "999912",
-															"CARD_POINT_EXP_DATE": "999912"
-														});
-														return;
-													})
-													.catch (function (err) {
-														console.log('Update MPOTF1P : fail');
-														res.status(500);
-														res.end();
-														return;
+													res.json({
+														"RESP_SYSCDE": "",
+														"RESP_DATETIME": date_str,
+														"RESP_CDE": 102,
+														"RESP_MSG": "Success, found many MCard (already have cust_id)",
+														"MCARD_NUM": mb,
+														"CARD_TYPE": mb_type,
+														"CARD_EXPIRY_DATE": "999912",
+														"CARD_POINT_BALANCE": 0,
+														"CARD_POINT_EXPIRY": "999912",
+														"CARD_POINT_EXP_DATE": "999912"
 													});
+													return;
 												})
 												.catch (function (err) {
-													console.log('Insert MPOTF1P');
-													var options = {
-														method: 'POST',
-														uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_mpotf1p/' + mb,
-														body: req.body,
-														json: true // Automatically stringifies the body to JSON
-													};
-													rp(options)
-													.then(function (result) {
-														res.json({
-															"RESP_SYSCDE": "",
-															"RESP_DATETIME": date_str,
-															"RESP_CDE": 102,
-															"RESP_MSG": "Success, found many MCard (already have cust_id)",
-															"MCARD_NUM": mb,
-															"CARD_TYPE": mb_type,
-															"CARD_EXPIRY_DATE": "999912",
-															"CARD_POINT_BALANCE": 0,
-															"CARD_POINT_EXPIRY": "999912",
-															"CARD_POINT_EXP_DATE": "999912"
-														});
-														return;
-													})
-													.catch (function (err) {
-														console.log('Insert MPOTF1P : fail');
-														res.status(500);
-														res.end();
-														return;
-													});
+													console.log('Update MPOTF1P : fail');
+													res.status(500);
+													res.end();
+													return;
 												});
 											})
 											.catch (function (err) {
-												console.log('Insert PM200MP : fail');
-												res.status(500);
-												res.end();
-												return;
+												console.log('Insert MPOTF1P');
+												var options = {
+													method: 'POST',
+													uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_mpotf1p/' + mb,
+													body: req.body,
+													json: true // Automatically stringifies the body to JSON
+												};
+												rp(options)
+												.then(function (result) {
+													res.json({
+														"RESP_SYSCDE": "",
+														"RESP_DATETIME": date_str,
+														"RESP_CDE": 102,
+														"RESP_MSG": "Success, found many MCard (already have cust_id)",
+														"MCARD_NUM": mb,
+														"CARD_TYPE": mb_type,
+														"CARD_EXPIRY_DATE": "999912",
+														"CARD_POINT_BALANCE": 0,
+														"CARD_POINT_EXPIRY": "999912",
+														"CARD_POINT_EXP_DATE": "999912"
+													});
+													return;
+												})
+												.catch (function (err) {
+													console.log('Insert MPOTF1P : fail');
+													res.status(500);
+													res.end();
+													return;
+												});
 											});
 										})
 										.catch (function (err) {
-											console.log('Insert PM110MP : fail');
+											console.log('Insert PM200MP : fail');
 											res.status(500);
 											res.end();
 											return;
 										});
 									})
 									.catch (function (err) {
-										console.log('Insert MVM02P : fail');
+										console.log('Insert PM110MP : fail');
 										res.status(500);
 										res.end();
 										return;
 									});
 								})
 								.catch (function (err) {
-									console.log('Insert MVM01P : fail');
+									console.log(err);
+									console.log('Insert MCRTA7P : Fail');
 									res.status(500);
 									res.end();
 									return;
@@ -1548,7 +1556,7 @@ var config = require('../../../../config/')
 										console.log('Insert MCRTA7P : success');
 										var options = {
 											method: 'POST',
-											uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_mvm01p/' + mb,
+											uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_mvm01p/' + mb + '/' + mbnat_ +'/' + ctry,
 											body: req.body,
 											json: true // Automatically stringifies the body to JSON
 										};
@@ -1569,7 +1577,7 @@ var config = require('../../../../config/')
 												console.log('Insert PM110MP');
 												var options = {
 													method: 'POST',
-													uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm110mp/' + ctry,
+													uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm110mp/' + ctry + '/' + mb_type +'/' + ctry,
 													body: req.body,
 													json: true // Automatically stringifies the body to JSON
 												};

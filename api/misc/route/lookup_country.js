@@ -16,7 +16,7 @@ const pool = require('node-jt400').pool(config_400);
 router.get('/:CUST_COUNTRYCODE', function(req,res){
   // get mcard 
   console.log(req.params.CUST_COUNTRYCODE);
-  	var stmt = "select CM100MP.CNTRYCD3 from MBRFLIB/CM100MP CM100MP where CM100MP.CNTRYCD2 = '" + req.params.CUST_COUNTRYCODE + "'";
+  	var stmt = "select CM100MP.CNTRYCD3,CM100MP.MBNAT from MBRFLIB/CM100MP CM100MP where CM100MP.CNTRYCD2 = '" + req.params.CUST_COUNTRYCODE + "'";
   pool.query(stmt)
     .then(function(result) {
       console.log(result.length);

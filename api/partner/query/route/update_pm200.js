@@ -13,6 +13,15 @@ const config_400 = {
 const pool = require('node-jt400').pool(config_400);
 
 router.post('/:MBCODE', function (req, res) {
+	
+	if(req.params.CTRY3 == 'THA'){
+		citizen = req.body.CUST_ID;
+	}
+	
+	else{
+		citizen = req.params.CTRY3 + req.body.CUST_ID;
+	}
+	
 
 	var date_str = '';
     var today = new Date();
@@ -23,7 +32,7 @@ router.post('/:MBCODE', function (req, res) {
 	var update_stmt = "update MBRFLIB/PM200MP ";
 	update_stmt += " set PNID=?,MBID=?,MBCODE=?,PNSTS=?,CLADTE=?,DATETIME=?";
 	update_stmt += " where PNNUM='" + req.body.PARTNER_NBR + "'";
-	var update_params = [req.body.PARTNER_ID,req.body.CUST_ID,req.params.MBCODE,'',parseInt(date_str),parseInt(datetime)];
+	var update_params = [req.body.PARTNER_ID,citizen,req.params.MBCODE,'',parseInt(date_str),parseInt(datetime)];
 
 	pool.update(update_stmt, update_params)
       .then(function(result) {

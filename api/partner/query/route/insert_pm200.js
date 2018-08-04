@@ -12,7 +12,15 @@ const config_400 = {
 };
 const pool = require('node-jt400').pool(config_400);
 
-router.post('/:MBCODE', function (req, res) {
+router.post('/:MBCODE/:CTRY3', function (req, res) {
+	
+	if(req.params.CTRY3 == 'THA'){
+		citizen = req.body.CUST_ID;
+	}
+	
+	else{
+		citizen = req.params.CTRY3 + req.body.CUST_ID;
+	}
 	
 	var date_str = '';
     var today = new Date();
@@ -29,7 +37,7 @@ router.post('/:MBCODE', function (req, res) {
 	var insert_stmt_params = [
 		req.body.PARTNER_ID //PNID
 	, req.body.PARTNER_NBR //PNNUM
-	, req.body.CUST_ID //MBID
+	, citizen //MBID
 	, req.params.MBCODE //MBCODE
 	, ''
 	, parseInt(date_str)

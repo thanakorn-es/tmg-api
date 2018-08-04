@@ -27,6 +27,7 @@ var lookup_mvm01p = require('./route/lookup_mvm01p');
 var lookup_mvm02p = require('./route/lookup_mvm02p');
 var lookup_custid = require('./route/lookup_custid');
 var lookup_nbr_id = require('./route/lookup_nbr_id');
+var lookup_mpotf1p = require('./route/lookup_mpotf1p');
 
 app.use('/api/lookup/partner/mbcode', partner_mbcode);
 app.use('/api/lookup/partner/nbr', partner_nbr);
@@ -38,6 +39,7 @@ app.use('/api/lookup/mvm01p', lookup_mvm01p);
 app.use('/api/lookup/mvm02p', lookup_mvm02p);
 app.use('/api/lookup/lookup_custid', lookup_custid);
 app.use('/api/lookup/nbr_id', lookup_nbr_id);
+app.use('/api/lookup/lookup_mpotf1p', lookup_mpotf1p);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

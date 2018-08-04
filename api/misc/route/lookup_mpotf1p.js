@@ -14,8 +14,15 @@ const pool = require('node-jt400').pool(config_400);
 
 router.get('/:MBCODE', function (req, res) {
 
+	
+	var date_str = '';
+	var today = new Date();
+	date_str = today.getFullYear().toString() + ((today.getMonth() + 1) < 10 ? '0' : '').toString() + (today.getMonth() + 1).toString() + (today.getDate() < 10 ? '0' : '').toString() + today.getDate();
+	
+
+	
 	console.log(req.params.CUST_ID);
-	var stmt = "select * from MBRFLIB/MPOTF1P MPOTF1P where MPOTF1P.MBID = '" + req.params.MBCODE + "'";
+	var stmt = "select * from MBRFLIB/MPOTF1P MPOTF1P where MPOTF1P.MBCODE = '" + req.params.MBCODE + "' and MPOTF1P.MBDAT='" + parseInt(date_str) + "'";
 	pool.query(stmt)
 	.then(function (result) {
 		console.log(result.length);
