@@ -12,7 +12,7 @@ const config_400 = {
 };
 const pool = require('node-jt400').pool(config_400);
 
-router.post('/:MBCODE', function (req, res) {
+router.post('/:MBCODE/:CTRY3', function (req, res) {
 	
 	if(req.params.CTRY3 == 'THA'){
 		citizen = req.body.CUST_ID;

@@ -158,18 +158,12 @@ router.post('/', function(req, res){
         });
     })
     .catch(function(err){
-      console.log('failure');
+      //console.log(err);
       res.status(200);
       res.json({      
         "RESP_CDE": err.statusCode,
-        "RESP_MSG": err.body
+        "RESP_MSG": err.error.reason
       });
-      /*
-      res.json({      
-        "RESP_CDE": 402,
-        "RESP_MSG": "Invalid Format"
-      });
-      */
 		  return;
     });
   });

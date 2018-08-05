@@ -22,7 +22,7 @@ router.get('/:CUST_COUNTRYCODE', function(req,res){
       console.log(result.length);
       console.log(result);
 	  
-	  if(req.params.CUST_COUNTRYCODE == '' || typeof req.params.CUST_COUNTRYCODE == 'undefined' ){
+	  if(req.params.CUST_COUNTRYCODE == '' || typeof req.params.CUST_COUNTRYCODE == 'undefined' || req.params.CUST_COUNTRYCODE == 'XX' ){
 		  res.status(200);
 		  res.json({});
 	  }

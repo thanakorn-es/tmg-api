@@ -13,7 +13,7 @@ var config = require('../../../../config/')
 
 		var options = {
 			method: 'POST',
-			uri: validator_schema_url + 'REGISTER',
+			uri: validator_schema_url + 'register',
 			body: req.body,
 			json: true // Automatically stringifies the body to JSON
 		};
@@ -40,13 +40,12 @@ var config = require('../../../../config/')
 				});
 				return;
 			}
-		}
-		else if (!req.body.DEMO_NTNL) {
+		} else if (!req.body.DEMO_NTNL) {
 			res.json({
-					"RESP_CDE": 402,
-					"RESP_MSG": "Invalid format"
-				});
-				return;
+				"RESP_CDE": 402,
+				"RESP_MSG": "Invalid format"
+			});
+			return;
 		}
 		rp(options)
 		.then(function (result) {
@@ -94,7 +93,7 @@ var config = require('../../../../config/')
 									mb = result.MBCODE_R;
 									var options = {
 										method: 'POST',
-										uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_mvm01p/' + mb + '/' + mbnat_ +'/' + ctry,
+										uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_mvm01p/' + mb + '/' + mbnat_ + '/' + ctry,
 										body: req.body,
 										json: true // Automatically stringifies the body to JSON
 									};
@@ -115,7 +114,7 @@ var config = require('../../../../config/')
 											console.log('Insert PM110MP');
 											var options = {
 												method: 'POST',
-												uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm110mp/' + ctry + '/' + mb_type +'/' + ctry,
+												uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm110mp/' + ctry + '/' + mb_type,
 												body: req.body,
 												json: true // Automatically stringifies the body to JSON
 											};
@@ -125,7 +124,7 @@ var config = require('../../../../config/')
 												console.log('Insert PM200MP');
 												var options = {
 													method: 'POST',
-													uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm200/' + mb,
+													uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm200/' + mb + '/' + ctry,
 													body: req.body,
 													json: true // Automatically stringifies the body to JSON
 												};
@@ -323,7 +322,7 @@ var config = require('../../../../config/')
 									console.log('Update PM110MP');
 									var options = {
 										method: 'POST',
-										uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/update_pm110mp/' + ctry + '/' + mb_type +'/' + ctry,
+										uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/update_pm110mp/' + ctry + '/' + mb_type,
 										body: req.body,
 										json: true // Automatically stringifies the body to JSON
 									};
@@ -333,7 +332,7 @@ var config = require('../../../../config/')
 										console.log('Insert PM200MP');
 										var options = {
 											method: 'POST',
-											uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm200/' + mb,
+											uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm200/' + mb + '/' + ctry,
 											body: req.body,
 											json: true // Automatically stringifies the body to JSON
 										};
@@ -431,7 +430,7 @@ var config = require('../../../../config/')
 									mb = result.MBCODE_R;
 									var options = {
 										method: 'POST',
-										uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_mvm01p/' + mb + '/' + mbnat_ +'/' + ctry,
+										uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_mvm01p/' + mb + '/' + mbnat_ + '/' + ctry,
 										body: req.body,
 										json: true // Automatically stringifies the body to JSON
 									};
@@ -452,7 +451,7 @@ var config = require('../../../../config/')
 											console.log('Update PM110MP');
 											var options = {
 												method: 'POST',
-												uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/update_pm110mp/' + ctry + '/' + mb_type +'/' + ctry,
+												uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/update_pm110mp/' + ctry + '/' + mb_type,
 												body: req.body,
 												json: true // Automatically stringifies the body to JSON
 											};
@@ -466,7 +465,7 @@ var config = require('../../../../config/')
 													console.log('Update PM200MP');
 													var options = {
 														method: 'POST',
-														uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/update_pm200/' + mb,
+														uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/update_pm200/' + mb + '/' + ctry,
 														body: req.body,
 														json: true // Automatically stringifies the body to JSON
 													};
@@ -550,7 +549,7 @@ var config = require('../../../../config/')
 													console.log('Insert PM200MP');
 													var options = {
 														method: 'POST',
-														uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm200/' + mb,
+														uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm200/' + mb + '/' + ctry,
 														body: req.body,
 														json: true // Automatically stringifies the body to JSON
 													};
@@ -681,7 +680,7 @@ var config = require('../../../../config/')
 									console.log('Update PM110MP');
 									var options = {
 										method: 'POST',
-										uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/update_pm110mp/' + ctry + '/' + mb_type +'/' + ctry,
+										uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/update_pm110mp/' + ctry + '/' + mb_type,
 										body: req.body,
 										json: true // Automatically stringifies the body to JSON
 									};
@@ -695,7 +694,7 @@ var config = require('../../../../config/')
 											console.log('Update PM200MP');
 											var options = {
 												method: 'POST',
-												uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/update_pm200/' + mb,
+												uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/update_pm200/' + mb + '/' + ctry,
 												body: req.body,
 												json: true // Automatically stringifies the body to JSON
 											};
@@ -779,7 +778,7 @@ var config = require('../../../../config/')
 											console.log('Insert PM200MP');
 											var options = {
 												method: 'POST',
-												uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm200/' + mb,
+												uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm200/' + mb + '/' + ctry,
 												body: req.body,
 												json: true // Automatically stringifies the body to JSON
 											};
@@ -889,7 +888,7 @@ var config = require('../../../../config/')
 										mb = result.MBCODE_R;
 										var options = {
 											method: 'POST',
-											uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_mvm01p/' + mb + '/' + mbnat_ +'/' + ctry,
+											uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_mvm01p/' + mb + '/' + mbnat_ + '/' + ctry,
 											body: req.body,
 											json: true // Automatically stringifies the body to JSON
 										};
@@ -910,7 +909,7 @@ var config = require('../../../../config/')
 												console.log('Update PM110MP');
 												var options = {
 													method: 'POST',
-													uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/update_pm110mp/' + ctry + '/' + mb_type +'/' + ctry,
+													uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/update_pm110mp/' + ctry + '/' + mb_type,
 													body: req.body,
 													json: true // Automatically stringifies the body to JSON
 												};
@@ -924,7 +923,7 @@ var config = require('../../../../config/')
 														console.log('Update PM200MP');
 														var options = {
 															method: 'POST',
-															uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/update_pm200/' + mb,
+															uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/update_pm200/' + mb + '/' + ctry,
 															body: req.body,
 															json: true // Automatically stringifies the body to JSON
 														};
@@ -1008,7 +1007,7 @@ var config = require('../../../../config/')
 														console.log('Insert PM200MP');
 														var options = {
 															method: 'POST',
-															uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm200/' + mb,
+															uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm200/' + mb + '/' + ctry,
 															body: req.body,
 															json: true // Automatically stringifies the body to JSON
 														};
@@ -1169,7 +1168,7 @@ var config = require('../../../../config/')
 								console.log('Insert PM110MP');
 								var options = {
 									method: 'POST',
-									uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm110mp/' + ctry + '/' + mb_type +'/' + ctry,
+									uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm110mp/' + ctry + '/' + mb_type,
 									body: req.body,
 									json: true // Automatically stringifies the body to JSON
 								};
@@ -1179,7 +1178,7 @@ var config = require('../../../../config/')
 									console.log('Insert PM200MP');
 									var options = {
 										method: 'POST',
-										uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm200/' + mb,
+										uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm200/' + mb + '/' + ctry,
 										body: req.body,
 										json: true // Automatically stringifies the body to JSON
 									};
@@ -1276,7 +1275,7 @@ var config = require('../../../../config/')
 									mb = result.MBCODE_R;
 									var options = {
 										method: 'POST',
-										uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_mvm01p/' + mb + '/' + mbnat_ +'/' + ctry,
+										uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_mvm01p/' + mb + '/' + mbnat_ + '/' + ctry,
 										body: req.body,
 										json: true // Automatically stringifies the body to JSON
 									};
@@ -1297,7 +1296,7 @@ var config = require('../../../../config/')
 											console.log('Insert PM110MP');
 											var options = {
 												method: 'POST',
-												uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm110mp/' + ctry + '/' + mb_type +'/' + ctry,
+												uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm110mp/' + ctry + '/' + mb_type,
 												body: req.body,
 												json: true // Automatically stringifies the body to JSON
 											};
@@ -1307,7 +1306,7 @@ var config = require('../../../../config/')
 												console.log('Insert PM200MP');
 												var options = {
 													method: 'POST',
-													uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm200/' + mb,
+													uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm200/' + mb + '/' + ctry,
 													body: req.body,
 													json: true // Automatically stringifies the body to JSON
 												};
@@ -1435,7 +1434,7 @@ var config = require('../../../../config/')
 									console.log('Insert PM110MP');
 									var options = {
 										method: 'POST',
-										uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm110mp/' + ctry + '/' + mb_type +'/' + ctry,
+										uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm110mp/' + ctry + '/' + mb_type,
 										body: req.body,
 										json: true // Automatically stringifies the body to JSON
 									};
@@ -1445,7 +1444,7 @@ var config = require('../../../../config/')
 										console.log('Insert PM200MP');
 										var options = {
 											method: 'POST',
-											uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm200/' + mb,
+											uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm200/' + mb + '/' + ctry,
 											body: req.body,
 											json: true // Automatically stringifies the body to JSON
 										};
@@ -1556,7 +1555,7 @@ var config = require('../../../../config/')
 										console.log('Insert MCRTA7P : success');
 										var options = {
 											method: 'POST',
-											uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_mvm01p/' + mb + '/' + mbnat_ +'/' + ctry,
+											uri: '' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/mcard/insert_mvm01p/' + mb + '/' + mbnat_ + '/' + ctry,
 											body: req.body,
 											json: true // Automatically stringifies the body to JSON
 										};
@@ -1577,7 +1576,7 @@ var config = require('../../../../config/')
 												console.log('Insert PM110MP');
 												var options = {
 													method: 'POST',
-													uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm110mp/' + ctry + '/' + mb_type +'/' + ctry,
+													uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm110mp/' + ctry + '/' + mb_type,
 													body: req.body,
 													json: true // Automatically stringifies the body to JSON
 												};
@@ -1587,7 +1586,7 @@ var config = require('../../../../config/')
 													console.log('Insert PM200MP');
 													var options = {
 														method: 'POST',
-														uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm200/' + mb,
+														uri: '' + config.endpoint.api_partner_inquiry.protocol + '://' + config.endpoint.api_partner_inquiry.url + ':' + config.endpoint.api_partner_inquiry.port + '/api/partner/insert_pm200/' + mb + '/' + ctry,
 														body: req.body,
 														json: true // Automatically stringifies the body to JSON
 													};
@@ -1717,10 +1716,10 @@ var config = require('../../../../config/')
 			//******************** End Case MCARD_FLAG: Other ********************//
 		})
 		.catch (function (err) {
-			console.log(err);
+			res.status(200);
 			res.json({
-				"RESP_CDE": 402,
-				"RESP_MSG": "Invalid format"
+				"RESP_CDE": err.statusCode,
+				"RESP_MSG": err.error.reason
 			});
 			return;
 		});

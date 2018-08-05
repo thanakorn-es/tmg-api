@@ -70,18 +70,12 @@ router.post('/', function(req, res){
         });
     })
     .catch(function(err){
-      console.log(err);
-	  console.log('No partner');
-	  res.json({
-	  		"RESP_SYSCDE": "",
-	  		"RESP_DATETIME": "",
-	  		"RESP_CDE": 301,
-	  		"RESP_MSG": "Not success/ Not found Partner ID/Partner NBR",
-	  		"MCARD_NUM": "",
-	  		"CARD_TYPE": "",
-	  		"CARD_EXPIRY_DATE": "",
-	  	});
-	  return;
+      res.status(200);
+      res.json({      
+        "RESP_CDE": err.statusCode,
+        "RESP_MSG": err.error.reason
+      });
+		  return;
     });
 });
 

@@ -271,13 +271,12 @@ router.post('/', function(req, res){
         });
     })
     .catch(function(err){
-      console.log(err.statusCode);
       res.status(200);
-      res.json({
-			"RESP_CDE": 402,
-			"RESP_MSG": "Invalid Format"
-		});
-		return;
+      res.json({      
+        "RESP_CDE": err.statusCode,
+        "RESP_MSG": err.error.reason
+      });
+		  return;
     });
 });
 

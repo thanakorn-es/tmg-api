@@ -12,7 +12,7 @@ const config_400 = {
 };
 const pool = require('node-jt400').pool(config_400);
 
-router.post('/:CTRY3/:MBMEMC/:CTRY3', function (req, res) {
+router.post('/:CTRY3/:MBMEMC/', function (req, res) {
 
 	var village = '';
 	var floor = '';
@@ -71,7 +71,7 @@ router.post('/:CTRY3/:MBMEMC/:CTRY3', function (req, res) {
 	, req.body.PARTNER_PROD //PNPROD
 	, req.body.PARTNER_NBR //PNNUM
 	, req.body.PARTNER_DETAILS //PNDETAIL
-	, req.body.CUST_ID //MBID
+	, citizen //MBID
 	, req.body.DEMO_TH_TITLE //TH_TITLE
 	, req.body.DEMO_TH_NAME //TH_NAME
 	, req.body.DEMO_TH_SURNAME //TH_SURNAM

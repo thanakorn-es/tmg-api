@@ -168,9 +168,12 @@ router.post('/', function(req, res){
         });
     })
     .catch(function(err){
-      console.log('failure');
-      res.status(400);
-      res.end();
+      res.status(200);
+      res.json({      
+        "RESP_CDE": err.statusCode,
+        "RESP_MSG": err.error.reason
+      });
+		  return;
     });
 });
 
