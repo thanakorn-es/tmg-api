@@ -12,7 +12,7 @@ const config_400 = {
 };
 const pool = require('node-jt400').pool(config_400);
 
-router.post('/:CTRY3', function (req, res) {
+router.post('/:CTRY3/:MBTYPE', function (req, res) {
 
 	var village = '';
 	var floor = '';
@@ -20,26 +20,28 @@ router.post('/:CTRY3', function (req, res) {
 	var contacthome = '';
 	var citizen = '';
 	var passport = '';
+	var CTRY3 = '';
 
-	if (typeof req.body.village != 'undefined') {
-		village = req.body.village;
+	if (typeof req.body.ADD_VILLAGE != 'undefined') {
+		village = req.body.ADD_VILLAGE;
 	}
 
-	if (typeof req.body.floor != 'undefined') {
-		floor = req.body.floor;
+	if (typeof req.body.ADD_FLOOR != 'undefined') {
+		floor = req.body.ADD_FLOOR;
 	}
 
-	if (typeof req.body.soi != 'undefined') {
-		soi = req.body.soi;
+	if (typeof req.body.ADD_SOI != 'undefined') {
+		soi = req.body.ADD_SOI;
 	}
 
-	if (typeof req.body.contacthome != 'undefined') {
-		contacthome = req.body.contacthome;
+	if (typeof req.body.CONTACT_HOME != 'undefined') {
+		contacthome = req.body.CONTACT_HOME;
 	}
 
 	if (req.body.DEMO_NTNL == 'TH') {
 		if (checkID(req.body.CUST_ID)) {
 			citizen = req.body.CUST_ID;
+			CTRY3 = 'THA';
 		} else {
 			res.json({
 				"RESP_CDE": 402,
@@ -49,6 +51,11 @@ router.post('/:CTRY3', function (req, res) {
 		}
 	} else {
 		passport = req.body.CUST_ID;
+	}
+	
+	if(req.body.DEMO_NTNL != 'TH'){
+		citizen = req.params.CTRY3 + req.body.CUST_ID;
+		CTRY3 = req.params.CTRY3;
 	}
 
 	var date_str = '';
@@ -92,7 +99,7 @@ router.post('/:CTRY3', function (req, res) {
 	, req.body.ADD_POSTAL_CODE //ADD_POST
 	, contacthome //CT_HOME
 	, req.body.CONTACT_MOBILE //CT_MOBILE
-	, 'MC' //MBMEMC
+	, req.params.MBTYPE //MBMEMC
 	, parseInt(date_str) //MBDAT
 	, req.body.CONTACT_EMAIL //CT_EMAIL
 	, 02 //MBBRH

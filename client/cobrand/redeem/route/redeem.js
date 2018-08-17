@@ -145,10 +145,15 @@ var config = require('../../../../config/')
 						rp.post(log_1p)
 						.then(function (trans_result) {
 							trans_result = JSON.parse(trans_result);
-							rp.get('' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/redeem/get_mcrr2p/' + date_str4 + '/' + partner_result[0].MBCODE)
+							console.log(date_str);
+							console.log(partner_result[0].MBCODE);
+							rp.get('' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/redeem/get_mcrr2p/' + date_str + '/' + partner_result[0].MBCODE)
 							.then(function (p2_result) {
+								console.log(p2_result);
+								console.log(p2_result.length);
+								p2_result = JSON.parse(p2_result);
 								if (p2_result.length < 1) {
-									rp.get('' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/redeem/insert_mcrr2p/' + date_str4 + '/' + partner_result[0].MBCODE)
+									rp.get('' + config.endpoint.api_mcard_command.protocol + '://' + config.endpoint.api_mcard_command.url + ':' + config.endpoint.api_mcard_command.port + '/api/redeem/insert_mcrr2p/' + date_str + '/' + partner_result[0].MBCODE)
 									.then(function (p2_insert_result) {})
 									.catch (function (err) {
 										console.log(err);

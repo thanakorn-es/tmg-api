@@ -44,6 +44,7 @@ router.post('/', function(req, res){
 			  var max_ = 0;
 			  var limit_ = 0;
 			  var start_ = 0;
+			  var pnsts = '';
 			  max_ = start_;
 			  max_ = result.length;
 			  if (max_ > result.length) {
@@ -54,11 +55,17 @@ router.post('/', function(req, res){
 				  limit_ = max_;
 			  }
 			  for (var i = 0; i < limit_; i++) {
+				  if(result[i].PNSTS.toUpperCase() == 'C'){
+					  pnsts = "CANCEL";
+				  }
+				  else {
+					  pnsts = "ACTIVE";
+				  }
 				  cards.push({
 					  "PARTNER_PROD": result[i].PNPROD,
 					  "PARTNER_NBR": result[i].PNNUM,
 					  "PARTNER_DETAILS": result[i].PNDETAIL,
-					  "PARTNER_STATUS": "ACTIVE",
+					  "PARTNER_STATUS": pnsts,
 					  "PARTNER_DATE": result[i].CLADTE
 						  //"PARTNER_DATE": date_str
 				  });

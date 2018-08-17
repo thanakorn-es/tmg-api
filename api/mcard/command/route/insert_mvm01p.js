@@ -11,7 +11,7 @@ const config_400 = {
 	//password: 'qsecofr'
 };
 const pool = require('node-jt400').pool(config_400);
-router.post('/:MBCODE/:MBNAT/:CTRY3', function (req, res) {
+router.post('/:MBCODE/:MBNAT/:CTRY3/:MBAGEN/:MBTYPE', function (req, res) {
 
 	var village = '';
 	var floor = '';
@@ -98,11 +98,11 @@ router.post('/:MBCODE/:MBNAT/:CTRY3', function (req, res) {
 	, req.body.ADD_POSTAL_CODE //MBHPOS
 	, contacthome //MBHTEL
 	, req.body.CONTACT_MOBILE //MBPTEL
-	, 'MC' //MBMEMC
+	, req.params.MBTYPE //MBMEMC
 	, parseInt(date_str) //MBDAT
 	, req.body.CONTACT_EMAIL //MBEMAIL
 	, 02 //MBBRH
-	, 'SCB' //MBAGEN
+	, req.params.MBAGEN //MBAGEN
 	];
 
 	//MCRR2P - not implemented yet

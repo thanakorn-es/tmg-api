@@ -25,7 +25,7 @@ router.post('/:DATE/:TIME/:MBAPP/:MBCODE/:MRCP/:AGEN', function(req,res){
 		req.body.POINTBURN_TYPE, //POINTBUTN_TYPE --> MBTYR
 		req.params.MRCP, //MBRECN
 		1, //MBRUN
-		0, // MBPOINT
+		1, // MBPOINT
 		0, //MBPIE
 		parseInt(req.params.TIME),  //MBHOR														
 		'R', //POINTBURN_FLAG --> MBFLG							

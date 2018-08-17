@@ -19,9 +19,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 var mcard = require('./route/index');
 var genmbcode = require('./route/genmbcode');
+var genmb = require('./route/genmb');
 
 app.use('/api/mcard', mcard);
-app.use('/api/genmbcode', genmbcode);
+app.use('/api/genmbcode-temp', genmbcode);
+app.use('/api/genmbcode', genmb);
 
 app.get('/api/mcard/test/123', function(req,res){
   res.send('fwefew');

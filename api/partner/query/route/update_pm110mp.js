@@ -62,9 +62,9 @@ router.post('/:CTRY3/:MBMEMC/', function (req, res) {
 	var age = parseInt(today.getFullYear().toString()) - parseInt(req.body.DEMO_DOB.toString().substr(0, 4));
 
 	var update_stmt = "update MBRFLIB/PM110MP ";
-	update_stmt += " set PNPROD=?,PNDETAIL=?,MBID=?,TH_TITLE=?,TH_NAME=?,TH_SURNAM=?,EN_TITLE=?,EN_NAME=?,EN_SURNAM=?,MBBIRH=?,DE_NTNL=?,MBHSTS=?,MBSEX=?,MBCHIL=?,MBJOB=?,ADD_HOUSE=?,ADD_VILLA=?,MBFLR=?,ADD_SOI=?,ADD_ROAD=?,AD_SUBDIS=?,ADD_DISTR=?,ADD_PROVI=?,ADD_POST=?,CT_HOME=?,CT_MOBILE=?,MBMEMC=?,MBDAT=?,CLADTE=?,CT_EMAIL=?,MBBRH=?,B_SCBM=?";
+	update_stmt += " set PNPROD=?,PNDETAIL=?,MBID=?,TH_TITLE=?,TH_NAME=?,TH_SURNAM=?,EN_TITLE=?,EN_NAME=?,EN_SURNAM=?,MBBIRH=?,DE_NTNL=?,CNTRYCD3=?,MBHSTS=?,MBSEX=?,MBCHIL=?,MBJOB=?,ADD_HOUSE=?,ADD_VILLA=?,MBFLR=?,ADD_SOI=?,ADD_ROAD=?,AD_SUBDIS=?,ADD_DISTR=?,ADD_PROVI=?,ADD_POST=?,CT_HOME=?,CT_MOBILE=?,MBMEMC=?,MBDAT=?,CLADTE=?,CT_EMAIL=?,MBBRH=?,B_SCBM=?";
 	update_stmt += " where PNID='" + req.body.PARTNER_ID + "' and PNNUM='" + req.body.PARTNER_NBR + "'";
-	var update_params = [req.body.PARTNER_PROD,req.body.PARTNER_DETAILS,citizen,req.body.DEMO_TH_TITLE,req.body.DEMO_TH_NAME,req.body.DEMO_TH_SURNAME,req.body.DEMO_EN_TITLE,req.body.DEMO_EN_NAME,req.body.DEMO_EN_SURNAME,req.body.DEMO_DOB,req.params.CTRY3,req.body.DEMO_MRTLSTS,req.body.DEMO_GENDER,req.body.DEMO_HAVE_KIDS,req.body.DEMO_OCCUP,req.body.ADD_HOUSE_NUM,village,floor,soi,req.body.ADD_ROAD,req.body.ADD_SUB_DISTRICT,req.body.ADD_DISTRICT,req.body.ADD_PROVINCE,req.body.ADD_POSTAL_CODE,contacthome,req.body.CONTACT_MOBILE,req.params.MBMEMC,parseInt(date_str),parseInt(date_str),req.body.CONTACT_EMAIL,02,1];
+	var update_params = [req.body.PARTNER_PROD,req.body.PARTNER_DETAILS,citizen,req.body.DEMO_TH_TITLE,req.body.DEMO_TH_NAME,req.body.DEMO_TH_SURNAME,req.body.DEMO_EN_TITLE,req.body.DEMO_EN_NAME,req.body.DEMO_EN_SURNAME,req.body.DEMO_DOB,req.body.DEMO_NTNL,req.params.CTRY3,req.body.DEMO_MRTLSTS,req.body.DEMO_GENDER,req.body.DEMO_HAVE_KIDS,req.body.DEMO_OCCUP,req.body.ADD_HOUSE_NUM,village,floor,soi,req.body.ADD_ROAD,req.body.ADD_SUB_DISTRICT,req.body.ADD_DISTRICT,req.body.ADD_PROVINCE,req.body.ADD_POSTAL_CODE,contacthome,req.body.CONTACT_MOBILE,req.params.MBMEMC,parseInt(date_str),parseInt(date_str),req.body.CONTACT_EMAIL,02,1];
 
 	pool.update(update_stmt, update_params)
       .then(function(result) {

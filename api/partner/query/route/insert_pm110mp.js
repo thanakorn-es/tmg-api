@@ -61,9 +61,9 @@ router.post('/:CTRY3/:MBMEMC/', function (req, res) {
 	var age = parseInt(today.getFullYear().toString()) - parseInt(req.body.DEMO_DOB.toString().substr(0, 4));
 
 	var insert_mcard = "insert into MBRFLIB/PM110MP";
-	insert_mcard += " (PNID,PNPROD,PNNUM,PNDETAIL,MBID,TH_TITLE,TH_NAME,TH_SURNAM,EN_TITLE,EN_NAME,EN_SURNAM,MBBIRH,DE_NTNL,MBHSTS,MBSEX,MBCHIL,MBJOB,ADD_HOUSE,ADD_VILLA,MBFLR,ADD_SOI,ADD_ROAD,AD_SUBDIS,ADD_DISTR,ADD_PROVI,ADD_POST,CT_HOME,CT_MOBILE,MBMEMC,MBDAT,CLADTE,CT_EMAIL,MBBRH,B_SCBM)";
+	insert_mcard += " (PNID,PNPROD,PNNUM,PNDETAIL,MBID,TH_TITLE,TH_NAME,TH_SURNAM,EN_TITLE,EN_NAME,EN_SURNAM,MBBIRH,DE_NTNL,CNTRYCD3,MBHSTS,MBSEX,MBCHIL,MBJOB,ADD_HOUSE,ADD_VILLA,MBFLR,ADD_SOI,ADD_ROAD,AD_SUBDIS,ADD_DISTR,ADD_PROVI,ADD_POST,CT_HOME,CT_MOBILE,MBMEMC,MBDAT,CLADTE,CT_EMAIL,MBBRH,B_SCBM)";
 	//insert_mcard += " (MBAPP,MBCODE,MBID,MBTTLE,MBTNAM,MBTSUR,MBETLE,MBENAM,MBESUR,MBEXP)";
-	insert_mcard += " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	insert_mcard += " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	//insert_mcard += " values(?,?,?,?,?,?,?,?,?,?)";
 
 	var insert_mcard_params = [
@@ -79,7 +79,8 @@ router.post('/:CTRY3/:MBMEMC/', function (req, res) {
 	, req.body.DEMO_EN_NAME //EN_NAME
 	, req.body.DEMO_EN_SURNAME //EN_SURNAM
 	, req.body.DEMO_DOB //MBBIRH
-	, req.params.CTRY3 //DE_NTNL
+	, req.body.DEMO_NTNL //DE_NTNL
+	, req.params.CTRY3 //CNTRYCD3
 	, req.body.DEMO_MRTLSTS //MBHSTS
 	, req.body.DEMO_GENDER //MBSEX
 	, req.body.DEMO_HAVE_KIDS //MBCHIL
