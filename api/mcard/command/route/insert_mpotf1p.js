@@ -18,8 +18,8 @@ router.post('/:MBCODE', function (req, res) {
     var today = new Date();
     date_str = today.getFullYear().toString() + ((today.getMonth() + 1) < 10 ? '0' : '').toString() + (today.getMonth() + 1).toString() + (today.getDate() < 10 ? '0' : '').toString() + today.getDate();
 	var contacthome = '';
-	if (typeof req.body.contacthome != 'undefined') {
-		contacthome = req.body.contacthome;
+	if (typeof req.body.CONTACT_HOME != 'undefined') {
+		contacthome = req.body.CONTACT_HOME;
 	}
 	
 	var insert_log = "insert into MBRFLIB/MPOTF1P";

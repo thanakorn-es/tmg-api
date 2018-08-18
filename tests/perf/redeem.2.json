@@ -1,0 +1,26 @@
+{
+	"config":{
+    "target": "https://49.231.171.163",
+		"phases": [
+      {
+				"duration": 1,
+				"arrivalRate": 300
+			}
+		]
+	},
+	"scenarios": [{
+		"name": "Redeem MPoint",
+    	"flow": [{
+			"post": {
+          "url": "/scb/sb/redeem_mpoint",
+          "headers": {
+					  "content-type": "application/json",
+					  "X-ibm-Client-id": "d2014527-2f56-43a5-a718-8bc20a4ced8c",
+	    			"X-ibm-Client-secret": "Y1nM7pN5aK1xH1xP5bP4dQ1rO1hU2nI2fV3sA1bN0cF2dR2uY7"
+				  },
+          "body": "{'PARTNER_ID' : '10200','PARTNER_NBR': '4548529000000006','POINTBURN_TYPE': 'DP','POINTBURN_FLAG': 'R','POINTBURN_BRANCH': 2,'POINTBURN_DEPT': '','POINTBURN_PROMO_NAME': '','POINTBURN_ITEM_CODE': '','POINTBURN_PROMO_NUM': '','POINTBURN_EDC_SHOP_NAME': '','POINTBURN_REFERENCE_NUM': '','POINTBURN_APPV_NUM': '','POINTBURN_EDC_RATE': '','POINTBURN_EDC_SALE_AMOUNT': 2000,'POINTBURN_EDC_DISCOUNT_AMT': 200,'POINTBURN_EDC_TERMINAL': '','POINTBURN_MPOINT': 800}"
+			}
+		}]
+	}]
+}
+

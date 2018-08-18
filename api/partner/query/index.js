@@ -22,6 +22,16 @@ var inquiry_partner = require('./route/inquiry_partner');
 var inquiry_id = require('./route/inquiry_id');
 var validate_id = require('./route/validate_id');
 
+var update_pm110mp = require('./route/update_pm110mp');
+var insert_pm110mp = require('./route/insert_pm110mp');
+var update_pm200 = require('./route/update_pm200');
+var insert_pm200 = require('./route/insert_pm200');
+
+app.use('/api/partner/update_pm110mp', update_pm110mp);
+app.use('/api/partner/insert_pm110mp', insert_pm110mp);
+app.use('/api/partner/update_pm200', update_pm200);
+app.use('/api/partner/insert_pm200', insert_pm200);
+
 app.use('/api/redeem_partner', redeem_partner);
 app.use('/api/inquiry_partner', inquiry_partner);
 app.use('/api/inquiry_id', inquiry_id);

@@ -59,6 +59,7 @@ router.post('/', function(req, res){
 				var MBPOINT_ = 0;
 				var MBCEXP_ = 0;
 				var MBDATT_ = 0;
+				var pnsts = '';
 				if(partner_result[0].MBEXP){
 					MBEXP_ = partner_result[0].MBEXP;
 				}
@@ -71,6 +72,13 @@ router.post('/', function(req, res){
 				if(partner_result[0].MBDATT){
 					MBDATT_ = partner_result[0].MBDATT;
 				}
+				
+				if(partner_result[0].PNSTS.toUpperCase() == 'C'){
+					  pnsts = "INACTIVE";
+				  }
+				  else {
+					  pnsts = "ACTIVE";
+				  }
                 res.json({
                     "RESP_SYSCDE": "",
                     "RESP_DATETIME": date_str,
@@ -92,7 +100,7 @@ router.post('/', function(req, res){
                         "PARTNER_PROD": partner_result[0].PNPROD,
                         "PARTNER_NBR": partner_result[0].PNNUM,
                         "PARTNER_DETAILS": partner_result[0].PNDETAIL,
-                        "PARTNER_STATUS": "ACTIVE",
+                        "PARTNER_STATUS": pnsts,
                         "PARTNER_DATE": partner_result[0].CLADTE
                             //"PARTNER_DATE": date_str
                     }],
@@ -124,6 +132,7 @@ router.post('/', function(req, res){
                 var cards = [];
                 var max_ = 0;
                 var limit_ = 0;
+				var pnsts = '';
                 var start_ = parseInt(req.body.SELRANGEDT.START);
                 max_ = start_;
                 max_ = max_ + parseInt(req.body.SELRANGEDT.LIMIT);
@@ -135,11 +144,17 @@ router.post('/', function(req, res){
                     limit_ = max_;
                 }
                 for (var i = start_; i < limit_; i++) {
+					if(partner_result[i].PNSTS.toUpperCase() == 'C'){
+					  pnsts = "INACTIVE";
+				  }
+				  else {
+					  pnsts = "ACTIVE";
+				  }
                     cards.push({
                         "PARTNER_PROD": partner_result[i].PNPROD,
                         "PARTNER_NBR": partner_result[i].PNNUM,
                         "PARTNER_DETAILS": partner_result[i].PNDETAIL,
-                        "PARTNER_STATUS": "ACTIVE",
+                        "PARTNER_STATUS": pnsts,
                         "PARTNER_DATE": partner_result[i].CLADTE
                             //"PARTNER_DATE": date_str
                     });
@@ -271,13 +286,12 @@ router.post('/', function(req, res){
         });
     })
     .catch(function(err){
-      console.log(err.statusCode);
       res.status(200);
-      res.json({
-			"RESP_CDE": 402,
-			"RESP_MSG": "Invalid Format"
-		});
-		return;
+      res.json({      
+        "RESP_CDE": err.statusCode,
+        "RESP_MSG": err.error.reason
+      });
+		  return;
     });
 });
 

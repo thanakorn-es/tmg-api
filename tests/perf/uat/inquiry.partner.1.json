@@ -1,0 +1,39 @@
+{
+	"config":{
+    "target": "https://49.231.171.163",
+    "tls": {
+      "rejectUnauthorized": false
+    },
+		"phases": [
+      {
+				"duration": 60,
+				"arrivalRate": 5
+			},{
+				"duration": 300,
+				"arrivalRate": 10
+			},{
+				"duration": 600,
+				"arrivalRate": 10,
+				"rampTo": 100
+			},{
+				"duration": 900,
+				"arrivalRate": 10,
+				"rampTo": 300
+			}
+		]
+	},
+	"scenarios": [{
+		"name": "Inquiry MPoint",
+    	"flow": [{
+			"post": {
+          "url": "/scb/sb/inquiry_mpoint",
+          "headers": {
+					  "content-type": "application/json",
+					  "X-ibm-Client-id": "feed1a1d-7272-4459-a51b-18699fe6b581",
+	    			"X-ibm-Client-secret": "E3dN1wF7xW8vN2yO4fH0qN6dW0nI6rB0cX7oR2hE5aR1uR6tI8"
+				  },
+          "body": '{"PARTNER_ID": "10200","PARTNER_NBR": "4548529000000006"}'
+			}
+		}]
+	}]
+}

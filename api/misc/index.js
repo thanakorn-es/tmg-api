@@ -25,7 +25,11 @@ var lookup_pm200mp = require('./route/lookup_pm200mp');
 var lookup_mcard_bycust = require('./route/lookup_mcard_bycust');
 var lookup_mvm01p = require('./route/lookup_mvm01p');
 var lookup_mvm02p = require('./route/lookup_mvm02p');
-var lookup_custid = require('./route/lookup_custid');
+var lookup_mcrta7p = require('./route/lookup_mcrta7p');
+var lookup_nbr_id = require('./route/lookup_nbr_id');
+var lookup_mpotf1p = require('./route/lookup_mpotf1p');
+var lookup_partner_bycust = require('./route/lookup_partner_bycust');
+var lookup_cr100mp = require('./route/lookup_cr100mp');
 
 app.use('/api/lookup/partner/mbcode', partner_mbcode);
 app.use('/api/lookup/partner/nbr', partner_nbr);
@@ -35,8 +39,11 @@ app.use('/api/lookup/pm200', lookup_pm200mp);
 app.use('/api/lookup/mcard_cust', lookup_mcard_bycust);
 app.use('/api/lookup/mvm01p', lookup_mvm01p);
 app.use('/api/lookup/mvm02p', lookup_mvm02p);
-app.use('/api/lookup/lookup_custid', lookup_custid);
-
+app.use('/api/lookup/mcrta7p', lookup_mcrta7p);
+app.use('/api/lookup/nbr_id', lookup_nbr_id);
+app.use('/api/lookup/mpotf1p', lookup_mpotf1p);
+app.use('/api/lookup/lookup_partner_bycust', lookup_partner_bycust);
+app.use('/api/lookup/cr100mp', lookup_cr100mp);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

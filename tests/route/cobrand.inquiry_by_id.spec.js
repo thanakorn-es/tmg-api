@@ -17,10 +17,18 @@ describe('Cobrand Inquiry MPoint', function(){
   before(function(){});
   after(function(){});
 
-  context('Correct Partner ID and Number', function(){    
-    it('should found 1 MCard', function(){    
-      return request.post('/cobrand/inquiry_mpoint')
-        .send({PARTNER_ID:"10200", PARTNER_NBR: "4966159000000006"})
+  context('Correct ID', function(){    
+    it('should succeed and found 1 MCard', function(){    
+      return request.post('/cobrand/inquiry_by_id')
+        .send({
+          PARTNER_ID:"10200", 
+          CUST_ID: "3001598793505",
+          CUST_COUNTRYCODE: "",
+          SELRANGEDT: {
+            START: 0,
+            LIMIT: 5
+          }
+        })
         .expect(200)
         .then(function(response){
           expect(response.body.RESP_CDE).to.equal(101);       
@@ -30,9 +38,40 @@ describe('Cobrand Inquiry MPoint', function(){
           
         });
     });
-    it('should not found MCard', function(){    
-      return request.post('/cobrand/inquiry_mpoint')
-        .send({PARTNER_ID:"10200", PARTNER_NBR: "4773769000000006"})
+    it('should succeed, and found many MCard', function(){    
+      return request.post('/cobrand/inquiry_by_id')
+        .send({
+          PARTNER_ID:"10200", 
+          CUST_ID: "1005373092027",
+          CUST_COUNTRYCODE: "",
+          SELRANGEDT: {
+            START: 0,
+            LIMIT: 5
+          }
+        })
+        .expect(200)
+        .then(function(response){
+          expect(response.body.RESP_CDE).to.equal(102);
+          expect(response.body.RESP_MSG).to.equal('Success, found many Mcard');
+          expect(response.body.MCARD_NUM).to.be.a('string');
+          expect(response.body.MCARD_NUM).to.not.be.empty; 
+        });
+    });
+
+    //beforeEach - update PM200MP set MBCODE='some value' where MBID = '3001598793505'
+    //afterEach - update PM200MP set MBCODE='old value' where MBID = '3001598793505'
+    /*
+    it('should succeed, but not found MCard', function(){    
+      return request.post('/cobrand/inquiry_by_id')
+        .send({
+          PARTNER_ID:"10200", 
+          CUST_ID: "3001598793505",
+          CUST_COUNTRYCODE: "",
+          SELRANGEDT: {
+            START: 0,
+            LIMIT: 5
+          }
+        })
         .expect(200)
         .then(function(response){
           expect(response.body.RESP_CDE).to.equal(302);
@@ -42,48 +81,67 @@ describe('Cobrand Inquiry MPoint', function(){
           
         });
     });
-    it('should found 1 MCard without point', function(){    
-      return request.post('/cobrand/inquiry_mpoint')
-        .send({PARTNER_ID:"10200", PARTNER_NBR: "4548529908976172"})
-        .expect(200)
-        .then(function(response){
-          expect(response.body.RESP_CDE).to.equal(101);
-          expect(response.body.RESP_MSG).to.equal('Success');
-          expect(response.body.MCARD_NUM).to.be.a('string');
-          expect(response.body.MCARD_NUM).to.not.be.empty; 
-          expect(response.body.CARD_POINT_BALANCE).to.equal(0);
-        });
-    }); 
+    */
   });
+
+
   context('Incorrect Partner ID and Number', function(){    
     it('should not success and not found partner ID', function(){
-      return request.post('/cobrand/inquiry_mpoint')
-        .send({PARTNER_ID:"10201", PARTNER_NBR: "4966159000000006"})
+      return request.post('/cobrand/inquiry_by_id')
+        .send({
+          PARTNER_ID:"10201", 
+          CUST_ID: "XXXXXXXXX",
+          CUST_COUNTRYCODE: "",
+          SELRANGEDT: {
+            START: 0,
+            LIMIT: 1
+          }
+        })
         .expect(200)
         .then(function(response){
           expect(response.body.RESP_CDE).to.equal(301);
           expect(response.body.MCARD_NUM).to.be.empty;
         });
-    });
-    it('should not success and not found partner number', function(){
-      return request.post('/cobrand/inquiry_mpoint')
-        .send({PARTNER_ID:"10200", PARTNER_NBR: "4548529111111116"})
-        .expect(200)
-        .then(function(response){
-          expect(response.body.RESP_CDE).to.equal(301);
-          expect(response.body.MCARD_NUM).to.be.empty;
-        });
-    });
+    });    
   });
+
+
   context('Validation', function(){
     it('shoud not succeed due to missing required fields', function(){
-      return request.post('/cobrand/inquiry_mpoint')
-        .send({PARTNER_ID:"10200"})
+      return request.post('/cobrand/inquiry_by_id')
+        .send({
+          PARTNER_ID:"10201", 
+          CUST_COUNTRYCODE: "",
+          SELRANGEDT: {
+            START: 0,
+            LIMIT: 1
+          }
+        })
         .expect(200)
         .then(function(response){
           expect(response.body.RESP_CDE).to.equal(401);
           expect(response.body.MCARD_NUM).to.be.an('undefined');
+          expect(response.body.RESP_MSG).to.equal('Missing Required Field');
         });
     });
+  });
+  it('shoud not succeed due to invalid format', function(){
+    return request.post('/cobrand/inquiry_by_id')
+      .send({
+        PARTNER_ID: "10200",
+        CUST_ID: "3001598793505",
+        CUST_COUNTRYCODE: 01,
+        SELRANGEDT:
+          {
+            START: 0,
+            LIMIT: 1
+          }
+      })
+      .expect(200)
+      .then(function(response){
+        expect(response.body.RESP_CDE).to.equal(402);
+        expect(response.body.MCARD_NUM).to.be.an('undefined');
+        expect(response.body.RESP_MSG).to.equal('Invalid Format');
+      });
   });
 });

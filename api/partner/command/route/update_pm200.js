@@ -33,9 +33,12 @@ router.post('/:MBCODE', function (req, res) {
 		res.json({});
 	})
 	.catch (function (err) {
-		res.status(500);
+		/*res.status(500);
 		console.log(err);
-		res.end();
+		res.end();*/
+		console.log(err);
+		res.status(200);
+		res.json({});
 	});
 });
 

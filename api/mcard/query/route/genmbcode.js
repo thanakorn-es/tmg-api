@@ -2,19 +2,16 @@ const express = require('express');
 const router = express.Router();
 const config = require('../../../../config');
 var rp = require('request-promise');
-const config_400 = {
+const config_400_gen = {
 	host: config.db.host,
 	user: config.db.user,
 	password: config.db.password
-	//host: '172.16.25.71',
-	//user: 'qsecofr',
-	//password: 'qsecofr'
 };
-const pool = require('node-jt400').pool(config_400);
+const pool = require('node-jt400').pool(config_400_gen);
 
-router.get('/', function (req, res) {
+router.get('/:CARDRANGE', function (req, res) {
 	var mb = '';
-	var stmt = "select max(tbl.RUNNING) as RUN from (select substr(MVM01P.MBCODE,1,6) as MTYPE,MVM01P.MBCODE,substr(MVM01P.MBCODE,8,6) as RUNNING from MBRFLIB/MVM01P MVM01P where substr(MVM01P.MBCODE,1,6) = '710570') as tbl";
+	var stmt = "select max(tbl.RUNNING) as RUN from (select substr(MVM01P.MBCODE,1,6) as MTYPE,MVM01P.MBCODE,substr(MVM01P.MBCODE,8,6) as RUNNING from MBRFLIB/MVM01P MVM01P where substr(MVM01P.MBCODE,1,6) = '" + req.params.CARDRANGE + "') as tbl";
 
 	pool.query(stmt)
 	.then(function (stmt_result) {
@@ -22,15 +19,19 @@ router.get('/', function (req, res) {
 		
 		
 		if (stmt_result.length <= 0) {
-			console.('1');
-			mb = '710570000000102';
+			mb = req.params.CARDRANGE + '000000102';
 			console.log(mb);
-		} else {
+		} 
+		else if (!stmt_result[0].RUN) {
+			mb = req.params.CARDRANGE + '000000102';
+			console.log(mb);
+		} 
+		else {
 			//mb = parseInt(stmt_result[0].RUNNING) + 1;
 			var s = (parseInt(stmt_result[0].RUN) + 1) + "";
 			while (s.length < 6)
 				s = "0" + s;
-			mb = '7105700' + s + '02';
+			mb = req.params.CARDRANGE + '0' + s + '02';
 			console.log(mb);
 		}
 
@@ -49,6 +50,7 @@ router.get('/', function (req, res) {
 			//console.log(b);
 			i++;
 		}
+		console.log(b);
 		var c = 0;
 		c = 10 - (b % 10);
 		if (c == 10) {

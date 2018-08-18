@@ -35,7 +35,7 @@ router.get('/:MBCODE', function(req,res){
       }
     })
     .catch(function(err){
-
+		res.end();
     });
 });
 

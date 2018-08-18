@@ -1,0 +1,25 @@
+{
+	"config":{
+    "target": "https://mds.themall.co.th",
+		"phases": [
+			{
+				"duration": 1,
+				"arrivalRate": 1
+			}
+		]
+	},
+	"scenarios": [{
+		"name": "PRD Pre-Test",
+    	"flow": [{
+			"post": {
+          "url": "/scb/cobrand/validateid",
+          "headers": {
+					  "content-type": "application/json",
+					  "X-ibm-Client-id": "a5f8d31b-0d6f-426f-95de-e672573a51be",
+	          "X-ibm-Client-secret": "vW8iC4aB1nL4bH8rM1qT4cG5fH6iX8fM6xI7nY4jE5tS5nA2sH"
+				  },
+          "body": '{"CUST_ID": "3001598793505"}'
+			}
+		}]
+	}]
+}

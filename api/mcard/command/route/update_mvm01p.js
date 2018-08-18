@@ -11,8 +11,7 @@ const config_400 = {
 	//password: 'qsecofr'
 };
 const pool = require('node-jt400').pool(config_400);
-
-router.post('/:MBCODE', function (req, res) {
+router.post('/:MBCODE/:MBNAT/:CTRY3/:MBAGEN', function (req, res) {
 
 	var village = '';
 	var floor = '';
@@ -21,20 +20,20 @@ router.post('/:MBCODE', function (req, res) {
 	var citizen = '';
 	var passport = '';
 
-	if (typeof req.body.village != 'undefined') {
-		village = req.body.village;
+	if (typeof req.body.ADD_VILLAGE != 'undefined') {
+		village = req.body.ADD_VILLAGE;
 	}
 
-	if (typeof req.body.floor != 'undefined') {
-		floor = req.body.floor;
+	if (typeof req.body.ADD_FLOOR != 'undefined') {
+		floor = req.body.ADD_FLOOR;
 	}
 
-	if (typeof req.body.soi != 'undefined') {
-		soi = req.body.soi;
+	if (typeof req.body.ADD_SOI != 'undefined') {
+		soi = req.body.ADD_SOI;
 	}
 
-	if (typeof req.body.contacthome != 'undefined') {
-		contacthome = req.body.contacthome;
+	if (typeof req.body.CONTACT_HOME != 'undefined') {
+		contacthome = req.body.CONTACT_HOME;
 	}
 
 	if (req.body.DEMO_NTNL == 'TH') {
@@ -52,15 +51,19 @@ router.post('/:MBCODE', function (req, res) {
 		passport = req.body.CUST_ID;
 	}
 	
+	if(req.body.DEMO_NTNL != 'TH'){
+		citizen = req.params.CTRY3 + req.body.CUST_ID;
+	}
+	
 	var date_str = '';
     var today = new Date();
     date_str = today.getFullYear().toString() + ((today.getMonth() + 1) < 10 ? '0' : '').toString() + (today.getMonth() + 1).toString() + (today.getDate() < 10 ? '0' : '').toString() + today.getDate();
 	var age = parseInt(today.getFullYear().toString()) - parseInt(req.body.DEMO_DOB.toString().substr(0, 4));
 
 	var update_stmt = "update MBRFLIB/MVM01P ";
-	update_stmt += " set MBAPP=?,MBTTLE=?,MBTNAM=?,MBTSUR=?,MBETLE=?,MBENAM=?,MBESUR=?,MBPUR=?,MBEXP=?,MBID=?,MBBIRH=?,MBAGE=?,MBPASS=?,MBNAT=?,MBHSTS=?,MBSEX=?,MBCHIL=?,MBJOB=?,MBSINC=?,MBHNO=?,MBHVIL=?,MBFLR=?,MBHSOI=?,MBHRD=?,MBHPFT=?,MBHBOR=?,MBHPRV=?,MBHPOS=?,MBHTEL=?,MBPTEL=?,MBMEMC=?,MBDAT=?,MBEMAIL=?,MBBRH=?,MBAGEN=?";
+	update_stmt += " set MBAPP=?,MBTTLE=?,MBTNAM=?,MBTSUR=?,MBETLE=?,MBENAM=?,MBESUR=?,MBPUR=?,MBEXP=?,MBID=?,MBBIRH=?,MBAGE=?,MBPASS=?,MBNAT=?,MBHSTS=?,MBSEX=?,MBCHIL=?,MBJOB=?,MBSINC=?,MBHNO=?,MBHVIL=?,MBFLR=?,MBHSOI=?,MBHRD=?,MBHPFT=?,MBHBOR=?,MBHPRV=?,MBHPOS=?,MBHTEL=?,MBPTEL=?,MBEMAIL=?,MBBRH=?,MBAGEN=?";
 	update_stmt += " where MBCODE='" + req.params.MBCODE + "'";
-	var update_params = [02,'คุณ',req.body.DEMO_TH_NAME,req.body.DEMO_TH_SURNAME,req.body.DEMO_EN_TITLE,req.body.DEMO_EN_NAME,req.body.DEMO_EN_SURNAME,11,999912,citizen,req.body.DEMO_DOB,age,passport,req.body.DEMO_NTNL,req.body.DEMO_MRTLSTS,req.body.DEMO_GENDER,req.body.DEMO_HAVE_KIDS,req.body.DEMO_OCCUP,parseInt(today.getFullYear().toString()),req.body.ADD_HOUSE_NUM,village,floor,soi,req.body.ADD_ROAD,req.body.ADD_SUB_DISTRICT,req.body.ADD_DISTRICT,req.body.ADD_PROVINCE,req.body.ADD_POSTAL_CODE,contacthome,req.body.CONTACT_MOBILE,'MC',parseInt(date_str),req.body.CONTACT_EMAIL,02,'SCB'];
+	var update_params = [02,'คุณ',req.body.DEMO_TH_NAME,req.body.DEMO_TH_SURNAME,req.body.DEMO_EN_TITLE,req.body.DEMO_EN_NAME,req.body.DEMO_EN_SURNAME,11,999912,citizen,req.body.DEMO_DOB,age,passport,req.params.MBNAT,req.body.DEMO_MRTLSTS,req.body.DEMO_GENDER,req.body.DEMO_HAVE_KIDS,req.body.DEMO_OCCUP,parseInt(today.getFullYear().toString()),req.body.ADD_HOUSE_NUM,village,floor,soi,req.body.ADD_ROAD,req.body.ADD_SUB_DISTRICT,req.body.ADD_DISTRICT,req.body.ADD_PROVINCE,req.body.ADD_POSTAL_CODE,contacthome,req.body.CONTACT_MOBILE,req.body.CONTACT_EMAIL,02,req.params.MBAGEN];
 
 	pool.update(update_stmt, update_params)
       .then(function(result) {
